@@ -200,10 +200,25 @@ public class DrawPanel extends JPanel  {
             System.out.println("saved here");
             Path target = targetDir.resolve(name);// create new path ending with `name` content
 
+            PrintWriter writer = new PrintWriter("src/MapApp/Assets/MapFiles/" +
+                    name+ "/NodeSource.txt", "UTF-8");
+            writer.println(filePath);
+
+            for(Node node: nodes) {
+                writer.println(node.getID() + " " + node.getLocX() + " " + node.getLocY());
+                for (int i =0;i<node.returnAdjacent().size();i++) {
+                    writer.print(node.returnAdjacent().get(i).getID() + " ");
+                    writer.print(node.returnweight().get(i)+ " ");
+                }
+                writer.println();
+            }
+
+            writer.close();
 
         }catch (IOException e) {
 
         }
+
 
     }
 

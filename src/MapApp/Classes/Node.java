@@ -1,6 +1,7 @@
 package MapApp.Classes;
 
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 public class Node {
     private ArrayList<Node> adjacent = new ArrayList<>();
@@ -36,6 +37,13 @@ public class Node {
             System.out.print("  " + node.nodeID);
         }
         System.out.println();
+    }
+
+    public ArrayList<Node> returnAdjacent() {
+        return adjacent;
+    }
+    public ArrayList<Integer> returnweight() {
+        return weight;
     }
 
 
