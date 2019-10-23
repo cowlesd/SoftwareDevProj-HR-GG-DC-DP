@@ -12,14 +12,16 @@ import java.io.*;
 public class GUI extends JFrame {
     private JPanel topPanel;
     private JPanel btnPanel;
+    JTable table;
     private JScrollPane scrollPane;
     DefaultTableModel modl = new DefaultTableModel();
     public GUI(){
+
         setTitle("MapApp Main Menu");
         setSize(400,200);
         setBackground(Color.black);
 
-        JTable table = new JTable(modl);
+        table = new JTable(modl);
 
         modl.addColumn("Col1");
         fillTable();
@@ -37,12 +39,22 @@ public class GUI extends JFrame {
 
         JButton newMap = new JButton("New Map");
         JButton refresh = new JButton("Refresh");
+        JButton findPath = new JButton("Find Path");
         JButton quit = new JButton("Quit");
 
         btnPanel.add(newMap);
         btnPanel.add(refresh);
+        btnPanel.add(findPath);
         btnPanel.add(quit);
 
+        findPath.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int currentRow = table.getSelectedRow();
+                String str = (String)table.getValueAt(currentRow, 0);
+                /****************************************************/
+            }
+        });
         refresh.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

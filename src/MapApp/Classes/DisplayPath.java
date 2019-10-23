@@ -58,7 +58,7 @@ public class DisplayPath extends JPanel {
         frame.setExtendedState(Frame.MAXIMIZED_BOTH);
         frame.setUndecorated(true);
 
-        frame.setSize(400, 400);
+        frame.setSize(400, 600);
         frame.setVisible(true);
     }
 
