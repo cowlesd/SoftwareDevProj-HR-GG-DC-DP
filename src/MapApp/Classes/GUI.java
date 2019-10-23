@@ -18,23 +18,12 @@ public class GUI extends JFrame {
         setTitle("MapApp Main Menu");
         setSize(400,200);
         setBackground(Color.black);
-        //DefaultTableModel modl = new DefaultTableModel();
+
         JTable table = new JTable(modl);
 
         modl.addColumn("Col1");
         fillTable();
-//        File path = new File("src/MapApp/Assets/MapFiles");
-//
-//        File [] files = path.listFiles();
-//        System.out.println(files.length);
-//        for(int i = 0; i < modl.getRowCount();i++)
-//            modl.removeRow(0);
-//
-//
-//
-//        for (int i = 0; i < files.length; i++)
-//            modl.addRow(new Object[]{files[i].toString().substring(27)});
-//
+
 
 
         topPanel = new JPanel();
@@ -47,25 +36,24 @@ public class GUI extends JFrame {
         topPanel.add(scrollPane,BorderLayout.CENTER);
 
         JButton newMap = new JButton("New Map");
-        JButton findPath = new JButton("Find Shortest Path");
+        JButton refresh = new JButton("Refresh");
         JButton quit = new JButton("Quit");
 
         btnPanel.add(newMap);
-        btnPanel.add(findPath);
+        btnPanel.add(refresh);
         btnPanel.add(quit);
 
-        findPath.addActionListener(new ActionListener() {
+        refresh.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                fillTable();
             }
         });
         newMap.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DrawPanel.runProg(JOptionPane.showInputDialog("Enter file path for image"));
-                fillTable();
-                fillTable();
+
             }
         });
         quit.addActionListener(new ActionListener() {
@@ -92,10 +80,6 @@ public class GUI extends JFrame {
 
         for (int i = 0; i < files.length; i++)
             modl.addRow(new Object[]{files[i].toString().substring(27)});
-
-        System.out.println(modl.getRowCount());
-        modl.fireTableDataChanged();
-
 
     }
 
