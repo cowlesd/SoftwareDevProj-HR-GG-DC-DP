@@ -77,9 +77,9 @@ public class DrawPanel extends JPanel  {
             }
         });
     }
-    private boolean isDuplicate(Node n) {
-        for (Destination)
-    }
+//    private boolean isDuplicate(Node n) {
+//        for (Destination)
+//    }
 
     private Node getClosestNode(int x, int y) {
         for (Node node : nodes)
@@ -201,8 +201,9 @@ public class DrawPanel extends JPanel  {
 
             writer.close();
 
-        }catch (IOException e) {
 
+        }catch (IOException e) {
+            System.out.println("Fail");
         }
 
 
