@@ -9,27 +9,32 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.io.*;
 
-public class GUI extends JFrame implements ActionListener{
+public class GUI extends JFrame {
     private JPanel topPanel;
     private JPanel btnPanel;
     private JScrollPane scrollPane;
-
+    DefaultTableModel modl = new DefaultTableModel();
     public GUI(){
         setTitle("MapApp Main Menu");
-        setSize(300,200);
+        setSize(400,200);
         setBackground(Color.black);
-        DefaultTableModel modl = new DefaultTableModel();
+        //DefaultTableModel modl = new DefaultTableModel();
         JTable table = new JTable(modl);
 
         modl.addColumn("Col1");
-
-        File path = new File("src/MapApp/Assets/MapFiles");
-        String str = "";
-        File [] files = path.listFiles();
-        System.out.println(files.length);
-        for (int i = 0; i < files.length; i++)
-                modl.addRow(new Object[]{files[i].toString().substring(27)});
-
+        fillTable();
+//        File path = new File("src/MapApp/Assets/MapFiles");
+//
+//        File [] files = path.listFiles();
+//        System.out.println(files.length);
+//        for(int i = 0; i < modl.getRowCount();i++)
+//            modl.removeRow(0);
+//
+//
+//
+//        for (int i = 0; i < files.length; i++)
+//            modl.addRow(new Object[]{files[i].toString().substring(27)});
+//
 
 
         topPanel = new JPanel();
@@ -49,11 +54,50 @@ public class GUI extends JFrame implements ActionListener{
         btnPanel.add(findPath);
         btnPanel.add(quit);
 
+        findPath.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        newMap.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DrawPanel.runProg(JOptionPane.showInputDialog("Enter file path for image"));
+                fillTable();
+                fillTable();
+            }
+        });
+        quit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
 
 
         add(topPanel, BorderLayout.CENTER);
         add(btnPanel, BorderLayout.SOUTH);
 
+
+
     }
+    public void fillTable() {
+        File path = new File("src/MapApp/Assets/MapFiles");
+
+        File [] files = path.listFiles();
+        System.out.println(modl.getRowCount());
+        modl.setRowCount(0);
+
+        for (int i = 0; i < files.length; i++)
+            modl.addRow(new Object[]{files[i].toString().substring(27)});
+
+        System.out.println(modl.getRowCount());
+        modl.fireTableDataChanged();
+
+
+    }
+
 
 }

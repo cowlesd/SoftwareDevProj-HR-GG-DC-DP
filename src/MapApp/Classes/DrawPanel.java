@@ -155,7 +155,8 @@ public class DrawPanel extends JPanel  {
                 }
                 if (e.getKeyChar() =='s') {
                     saveData(nodes, filePath1, JOptionPane.showInputDialog("Save Name"));
-                    System.exit(0);
+                    frame.setVisible(false);
+                    frame.dispose();
                     /*************************************************/
                 }
             }
