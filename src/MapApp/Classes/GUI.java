@@ -9,6 +9,11 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.io.*;
 
+/**
+ *
+ * Special JFrame child class used to display main mapping application
+ *
+ */
 public class GUI extends JFrame {
     private JPanel topPanel;
     private JPanel btnPanel;
@@ -83,6 +88,12 @@ public class GUI extends JFrame {
 
 
     }
+
+    /**
+     *
+     *Method to fill the table of buildings available to navigate
+     *
+     */
     public void fillTable() {
         File path = new File("src/MapApp/Assets/MapFiles");
 
