@@ -3,7 +3,11 @@ import java.util.*;
 import java.io.*;
 
 class Building {
-  private String[][] nodes;
+
+    /**
+     * String containing the nodes of the building graph
+     */
+    private String[][] nodes;
 //add instance variables including: array of nodes and edges (as dictionary?)
 //add methods to scan in nodes/edges, find path, compare weights, 
     
