@@ -1,16 +1,13 @@
 package MapApp.Classes;
 
+import javax.imageio.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.*;
-import javax.imageio.*;
 import java.awt.image.BufferedImage;
-import java.util.*;
-import java.awt.Point;
+import java.io.*;
 import java.nio.file.*;
-import javax.swing.JFrame;
-import javax.xml.stream.Location;
+import java.util.*;
 
 public class DrawPanel extends JPanel  {
     //private static final long serialVersionUID = 1L;
@@ -48,8 +45,8 @@ public class DrawPanel extends JPanel  {
 
                  if (status == 0) {
                     ContextPoints.add(new Point(e.getX(), e.getY()));
-                    nodes.add(new Node(new Point(e.getX(), e.getY()),
-                            JOptionPane.showInputDialog("Enter NodeID")));
+                    //nodes.add(new Node(new Point(e.getX(), e.getY()),
+                    //        JOptionPane.showInputDialog("Enter NodeID")));
 
                      nodes.add(new Node(new Point(e.getX(), e.getY()), "A" + contextGenCounter++));
                 } else if (status == 1) {
