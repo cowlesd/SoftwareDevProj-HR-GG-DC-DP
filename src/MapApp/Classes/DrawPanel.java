@@ -27,9 +27,20 @@ public class DrawPanel extends JPanel  {
 
     public DrawPanel(String filepath1) {
         filePath = filepath1;
-         ArrayList<Point> pair = new ArrayList<>();
-         ArrayList<Node> nodePair = new ArrayList<>();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double height = screenSize.getHeight();
+        ArrayList<Point> pair = new ArrayList<>();
+        ArrayList<Node> nodePair = new ArrayList<>();
+        BufferedImage image;
         setBackground(Color.WHITE);
+
+        try {
+            image = ImageIO.read(new File(filePath));
+            JLabel picLabel = new JLabel(new ImageIcon(image.getScaledInstance(-1, (int)height, BufferedImage.SCALE_SMOOTH)));
+            add(picLabel);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "The filepath you entered does not exist or was otherwise invalid.");
+        }
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -37,8 +48,8 @@ public class DrawPanel extends JPanel  {
 
                  if (status == 0) {
                     ContextPoints.add(new Point(e.getX(), e.getY()));
-//                    nodes.add(new Node(new Point(e.getX(), e.getY()),
-//                            JOptionPane.showInputDialog("Enter NodeID")));
+                    nodes.add(new Node(new Point(e.getX(), e.getY()),
+                            JOptionPane.showInputDialog("Enter NodeID")));
 
                      nodes.add(new Node(new Point(e.getX(), e.getY()), "A" + contextGenCounter++));
                 } else if (status == 1) {

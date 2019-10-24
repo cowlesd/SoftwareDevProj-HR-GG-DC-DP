@@ -65,7 +65,6 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DrawPanel.runProg(JOptionPane.showInputDialog("Enter file path for image"));
-
             }
         });
         quit.addActionListener(new ActionListener() {
