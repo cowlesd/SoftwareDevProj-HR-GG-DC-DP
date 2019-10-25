@@ -10,7 +10,13 @@ class Building {
     private String[][] nodes;
 //add instance variables including: array of nodes and edges (as dictionary?)
 //add methods to scan in nodes/edges, find path, compare weights, 
-    
+
+    /**
+     * This method scans in a file as the matrix representation of a graph and its nodes
+     *
+     * @param filename the file path of the file to scan in
+     * @return a 2d string array representing the graph
+     */
     public static String[][] scan(String filename) {
         String[][] nodeArray = new String[0][0];
         try {
