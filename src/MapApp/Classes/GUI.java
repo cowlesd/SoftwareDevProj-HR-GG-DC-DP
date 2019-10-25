@@ -9,6 +9,11 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.io.*;
 
+/**
+ *
+ * Special JFrame child class used to display main mapping application and offer choice of options
+ * including
+ */
 public class GUI extends JFrame {
     private JPanel topPanel;
     private JPanel btnPanel;

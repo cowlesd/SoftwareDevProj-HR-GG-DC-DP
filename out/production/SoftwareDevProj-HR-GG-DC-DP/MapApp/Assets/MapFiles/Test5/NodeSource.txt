@@ -1,0 +1,7 @@
+src/MapApp/Assets/images/test.png
+A239 720 355
+A4056 42 
+A4056 721 313
+A239 42 R14 106 
+R14 615 320
+A4056 106 

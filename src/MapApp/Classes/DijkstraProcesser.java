@@ -4,6 +4,9 @@ import java.awt.*;
 import java.io.*;
 import java.util.*;
 
+/**
+ * Calculator for the shortest path
+ */
 public class DijkstraProcesser {
     String mapPath;
     String startPoint;
