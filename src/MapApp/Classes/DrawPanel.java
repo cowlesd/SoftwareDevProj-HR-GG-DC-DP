@@ -183,19 +183,19 @@ public class DrawPanel extends JPanel  {
     }
     private static void saveData(ArrayList<Node> nodes, String filePath, String name) {
 
-        Path storageDir = Paths.get("src/MapApp/Assets/MapFiles/" + name);
+        Path storageDir = Paths.get("src/main/resources/MapFiles/" + name);
         try {
             Files.createDirectories(storageDir);
 
-            PrintWriter writer = new PrintWriter("src/MapApp/Assets/MapFiles/" +
+            PrintWriter writer = new PrintWriter("src/main/resources/MapFiles/" +
                     name+ "/NodeSource.txt", "UTF-8");
             writer.println(filePath);
 
             for(Node node: nodes) {
                 writer.println(node.getID() + " " + node.getLocX() + " " + node.getLocY());
-                for (int i =0;i<node.returnAdjacent().size();i++) {
-                    writer.print(node.returnAdjacent().get(i).getID() + " ");
-                    writer.print(node.returnweight().get(i)+ " ");
+                for (int i =0;i<node.getAdjacent().size();i++) {
+                    writer.print(node.getAdjacent().get(i).getID() + " ");
+                    writer.print(node.getWeight().get(i)+ " ");
                 }
                 writer.println();
             }

@@ -23,8 +23,6 @@ public class DisplayPath extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-
-
         super.paintComponent(g);
         Graphics2D gDraw = (Graphics2D) g;
         gDraw.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -33,11 +31,11 @@ public class DisplayPath extends JPanel {
             BufferedImage image = ImageIO.read(new File(filePath));
             g.drawImage(image, 0, 0,getWidth(), getHeight(), null);
 
-            for (int i = 0; i < coordinateList.size(); i++) {
+            for (int i = 0; i < coordinateList.size() - 1; i++) {
                 int x1 = (int)coordinateList.get(i)[0];
                 int y1 = coordinateList.get(i)[1] -3;//modification of coordinates to provide accurate location
-                int x2 = coordinateList.get(i)[2];
-                int y2 = coordinateList.get(i)[3] -3;
+                int x2 = coordinateList.get(i+1)[0];
+                int y2 = coordinateList.get(i+1)[1] -3;
                 gDraw.drawLine(x1, y1, x2, y2);
 
             }
@@ -46,12 +44,11 @@ public class DisplayPath extends JPanel {
             System.out.print(filePath);
         }
     }
-
-
-    public static void runProg(String filePath1, ArrayList<Integer[]> coordinates) {
+    public void runProg(String filePath1, ArrayList<Integer[]> coordinates) {
         filePath = filePath1;
+        coordinateList = coordinates;
         JFrame frame = new JFrame();
-        frame.add(new DrawPanel(filePath1));
+        frame.add(this);
 
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,6 +57,7 @@ public class DisplayPath extends JPanel {
 
         frame.setSize(400, 600);
         frame.setVisible(true);
+        repaint();
     }
 
 }

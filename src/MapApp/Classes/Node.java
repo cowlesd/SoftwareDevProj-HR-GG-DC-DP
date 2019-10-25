@@ -28,9 +28,9 @@ public class Node {
     public int getLocY() {
         return location.y;
     }
-    public String getID() {
-        return nodeID;
-    }
+    public void setLocX(int x) {location.x = x;}
+    public void setLocY(int y) {location.y = y;}
+    public String getID() { return nodeID; }
 
     public void printAdjacent() {
         for (Node node: adjacent) {
@@ -39,10 +39,10 @@ public class Node {
         System.out.println();
     }
 
-    public ArrayList<Node> returnAdjacent() {
+    public ArrayList<Node> getAdjacent() {
         return adjacent;
     }
-    public ArrayList<Integer> returnweight() {
+    public ArrayList<Integer> getWeight() {
         return weight;
     }
 

@@ -15,6 +15,8 @@ public class GUI extends JFrame {
     JTable table;
     private JScrollPane scrollPane;
     DefaultTableModel modl = new DefaultTableModel();
+    private DijkstraProcesser dijkstraProcesser;
+
     public GUI(){
 
         setTitle("MapApp Main Menu");
@@ -51,7 +53,17 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int currentRow = table.getSelectedRow();
-                String str = (String)table.getValueAt(currentRow, 0);
+                String mapName = (String)table.getValueAt(currentRow, 0);
+                String startPoint = JOptionPane.showInputDialog("What is the name of your starting point?");
+                String endPoint = JOptionPane.showInputDialog("What is the name of your destination point?");
+                try {
+                    dijkstraProcesser = new DijkstraProcesser(startPoint, endPoint, "src/main/resources/MapFiles/" +
+                            mapName + "/NodeSource.txt");
+                    dijkstraProcesser.loadAdjacencyMatrix();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
                 /****************************************************/
             }
         });
@@ -65,7 +77,6 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DrawPanel.runProg(JOptionPane.showInputDialog("Enter file path for image"));
-
             }
         });
         quit.addActionListener(new ActionListener() {
@@ -84,14 +95,14 @@ public class GUI extends JFrame {
 
     }
     public void fillTable() {
-        File path = new File("src/MapApp/Assets/MapFiles");
+        File path = new File("src/main/resources/MapFiles");
 
         File [] files = path.listFiles();
         System.out.println(modl.getRowCount());
         modl.setRowCount(0);
 
         for (int i = 0; i < files.length; i++)
-            modl.addRow(new Object[]{files[i].toString().substring(27)});
+            modl.addRow(new Object[]{files[i].toString().substring(28)});
 
     }
 
