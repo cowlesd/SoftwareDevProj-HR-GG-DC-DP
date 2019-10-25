@@ -62,9 +62,9 @@ public class DijkstraProcesser {
     /**
      * Default constructor for DijkstraProcessor class
      *
-     * @param startPoint
-     * @param endPoint
-     * @param mapName
+     * @param startPoint the starting node
+     * @param endPoint the ending node
+     * @param mapName the name of the map 
      */
     public DijkstraProcesser(String startPoint, String endPoint, String mapName) {
         nodeList = new ArrayList<>();
@@ -222,7 +222,7 @@ public class DijkstraProcesser {
 
     /**
      * The dijkstra algorithm, which finds the shortest path through all points. Terminates at the end point
-     * @param graph
+     * @param graph nodes to search
      * @param src Index of the starting node
      */
     void dijkstra(int graph[][], int src)
