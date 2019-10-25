@@ -4,6 +4,9 @@ import javax.swing.*;
 
 public class Main {
 
+    /**
+     * Main method (bet you didn't see that coming)
+     */
     public static void main(String[] args) {
 
         GUI gui = new GUI();

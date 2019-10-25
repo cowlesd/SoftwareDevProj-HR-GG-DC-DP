@@ -9,11 +9,25 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
+/**
+ *Class to display the path (shortest) after it is found. Child of JPanel.
+ */
 public class DisplayPath extends JPanel {
+    /**
+     * Address of the file to be used/drawn upon
+     */
     private static String filePath="";
+    /**
+     * Coordinates between which to operate on / draw edges
+     */
     private ArrayList<Integer[]> coordinateList = new ArrayList<>();
 
+    /**
+     * Class to actually.. you know... draw the panel.
+     *
+     * @param filepath1 the file path of the file to 'draw'
+     *
+     */
     //@Override
     public void DrawPanel(String filepath1) {
         filePath = filepath1;
@@ -21,6 +35,11 @@ public class DisplayPath extends JPanel {
         repaint();
     }
 
+    /**
+     *Method to draw edges between nodes (as lines)
+     *
+     * @param g graphic object representing the desired states being drawn
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -44,6 +63,13 @@ public class DisplayPath extends JPanel {
             System.out.print(filePath);
         }
     }
+
+    /**
+     *Method to run the DisplayPath subroutine
+     *
+     * @param filePath1 Contains the filepath of the map to be used
+     * @param coordinates ArrayList of coordinates
+     */
     public void runProg(String filePath1, ArrayList<Integer[]> coordinates) {
         filePath = filePath1;
         coordinateList = coordinates;

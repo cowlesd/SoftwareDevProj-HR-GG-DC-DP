@@ -17,6 +17,11 @@ public class GUI extends JFrame {
     DefaultTableModel modl = new DefaultTableModel();
     private DijkstraProcesser dijkstraProcesser;
 
+    /**
+     *
+     * Special JFrame child class used to display main mapping application and offer choice of options
+     * including
+     */
     public GUI(){
 
         setTitle("MapApp Main Menu");
@@ -94,6 +99,12 @@ public class GUI extends JFrame {
 
 
     }
+
+    /**
+     *
+     *Method to fill the table of buildings available to navigate
+     *
+     */
     public void fillTable() {
         File path = new File("src/main/resources/MapFiles");
 
