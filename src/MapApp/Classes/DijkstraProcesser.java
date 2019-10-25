@@ -8,21 +8,65 @@ import java.util.*;
  * Calculator for the shortest path
  */
 public class DijkstraProcesser {
+    /**
+     * String representing the file path for the map image
+     */
     String mapPath;
+
+    /**
+     * String respresentation of the starting node
+     */
     String startPoint;
+
+    /**
+     * int representation of the starting node
+     */
     int startIndex;
+
+    /**
+     * String representation of the ending node
+     */
     String endPoint;
+
+    /**
+     * int representation of the ending node
+     */
     int endIndex;
+
+    /**
+     * Total number of vertices on the map
+     */
     int numVertices;
-    HashMap<String, Integer> vertexMap;
+
+    /**
+     * Arraylist of all nodes
+     */
     ArrayList<Node> nodeList;
+
+    /**
+     * Arraylist containing final path through nodes
+     */
     ArrayList<Node> shortestPathNodes;
+
+    /**
+     * Representation of final path as coordinates
+     */
     ArrayList<Integer[]> shortestPath;
+
+    /**
+     * Representation of graph as ints
+     */
     int graph[][];
 
 
+    /**
+     * Default constructor for DijkstraProcessor class
+     *
+     * @param startPoint
+     * @param endPoint
+     * @param mapName
+     */
     public DijkstraProcesser(String startPoint, String endPoint, String mapName) {
-        vertexMap = new HashMap<>();
         nodeList = new ArrayList<>();
         shortestPath = new ArrayList<>();
         shortestPathNodes = new ArrayList<>();
@@ -31,7 +75,10 @@ public class DijkstraProcesser {
         this.mapPath = mapName;
     }
 
-    //Fills nodes ArrayList with data
+    /**
+     * Fills nodes ArrayList with data
+     * @throws IOException
+     */
     public void loadAdjacencyMatrix() throws IOException {
         File file = new File(mapPath);
         BufferedReader br = null;
@@ -112,7 +159,9 @@ public class DijkstraProcesser {
         dijkstra(graph, startIndex);
     }
 
-    //Loads the arraylist into an easy-to-manage format
+    /**
+     * Loads the arrayList into an easy-to-manage format
+     */
     public void loadArray(){
         graph = new int[numVertices][numVertices];
         for(int i = 0; i < numVertices; i++){
@@ -128,6 +177,9 @@ public class DijkstraProcesser {
         }
     }
 
+    /**
+     * Marks the start and end points, given the string representation
+     */
     public void markStartEnd(){
         for(int i = 0; i < numVertices; i++){
             if(nodeList.get(i).getID().equals(startPoint))
@@ -137,17 +189,11 @@ public class DijkstraProcesser {
         }
     }
 
-    void findSolution() {
-        int i = shortestPathNodes.size() - 1;
-        while(i > 0){
-            if(!shortestPathNodes.get(i).getAdjacent().contains(shortestPathNodes.get(i-1))){
-                shortestPathNodes.remove(i-1);
-                shortestPath.remove(i-1);
-            }
-            i--;
-        }
-    }
-
+    /**
+     * Prints all node names and distance from start
+     * Used for testing
+     * @param dist Array of distances from start for each node
+     */
     void printSolution(int dist[])
     {
         System.out.println("Vertex \t\t Distance from Source");
@@ -155,6 +201,12 @@ public class DijkstraProcesser {
             System.out.println(nodeList.get(i).getID() + " " + i + " \t\t " + dist[i]);
     }
 
+    /**
+     * Finds the node with the minimum distance from all possible nodes
+     * @param dist current distances of each node
+     * @param sptSet contains true if node has been traversed, false if not
+     * @return The index of the node with the minimum distance
+     */
     int minDistance(int dist[], Boolean sptSet[])
     {
         int min = Integer.MAX_VALUE, min_index = -1;
@@ -168,6 +220,11 @@ public class DijkstraProcesser {
         return min_index;
     }
 
+    /**
+     * The dijkstra algorithm, which finds the shortest path through all points. Terminates at the end point
+     * @param graph
+     * @param src Index of the starting node
+     */
     void dijkstra(int graph[][], int src)
     {
         int dist[] = new int[numVertices];
@@ -206,5 +263,19 @@ public class DijkstraProcesser {
         DisplayPath display = new DisplayPath();
         display.runProg(mapPath, shortestPath);
         display.repaint();
+    }
+
+    /**
+     * Finds the complete solution, cleaning up the output from the algorithm
+     */
+    void findSolution() {
+        int i = shortestPathNodes.size() - 1;
+        while(i > 0){
+            if(!shortestPathNodes.get(i).getAdjacent().contains(shortestPathNodes.get(i-1))){
+                shortestPathNodes.remove(i-1);
+                shortestPath.remove(i-1);
+            }
+            i--;
+        }
     }
 }
