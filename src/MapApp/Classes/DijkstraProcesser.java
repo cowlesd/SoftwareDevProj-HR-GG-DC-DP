@@ -2,6 +2,9 @@ package MapApp.Classes;
 
 import java.util.*;
 
+/**
+ * Calculator for the shortest path
+ */
 public class DijkstraProcesser {
     ArrayList<Node> nodes;
 
