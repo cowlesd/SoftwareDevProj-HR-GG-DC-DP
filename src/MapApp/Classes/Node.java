@@ -3,6 +3,11 @@ package MapApp.Classes;
 import java.awt.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+
+/**
+ * The class used to represent and contain the information of/at a particular point of the building.
+ * Contains all information pertaining to 'this' location.
+ */
 public class Node {
 
     /**
