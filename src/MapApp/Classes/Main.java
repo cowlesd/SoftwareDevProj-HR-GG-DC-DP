@@ -2,6 +2,9 @@ package MapApp.Classes;
 
 import javax.swing.*;
 
+/**
+ * Main method (bet you didn't see that coming)
+ */
 public class Main {
 
     public static void main(String[] args) {
