@@ -28,7 +28,7 @@ public class GUI extends JFrame {
      * including
      */
     public GUI(){
-
+        JFileChooser fc = new JFileChooser();
         setTitle("MapApp Main Menu");
         setSize(400,200);
         setBackground(Color.black);
@@ -63,15 +63,23 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int currentRow = table.getSelectedRow();
-                String mapName = (String)table.getValueAt(currentRow, 0);
-                String startPoint = JOptionPane.showInputDialog("What is the name of your starting point?");
-                String endPoint = JOptionPane.showInputDialog("What is the name of your destination point?");
-                try {
-                    dijkstraProcesser = new DijkstraProcesser(startPoint, endPoint, "src/main/resources/MapFiles/" +
-                            mapName + "/NodeSource.txt");
-                    dijkstraProcesser.loadAdjacencyMatrix();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
+                if (currentRow != -1) {
+
+
+                    String mapName = (String) table.getValueAt(currentRow, 0);
+                    try {
+                        String startPoint = JOptionPane.showInputDialog("What is the name of your starting point?");
+                        String endPoint = JOptionPane.showInputDialog("What is the name of your destination point?");
+                        try {
+                            dijkstraProcesser = new DijkstraProcesser(startPoint, endPoint, "src/main/resources/MapFiles/" +
+                                    mapName + "/NodeSource.txt");
+                            dijkstraProcesser.loadAdjacencyMatrix();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    } catch (NumberFormatException num) {
+
+                    }
                 }
 
                 /****************************************************/
@@ -86,7 +94,7 @@ public class GUI extends JFrame {
         newMap.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DrawPanel.runProg(JOptionPane.showInputDialog("Enter file path for image"));
+                displayfile();
             }
         });
         quit.addActionListener(new ActionListener() {
@@ -120,6 +128,16 @@ public class GUI extends JFrame {
         for (int i = 0; i < files.length; i++)
             modl.addRow(new Object[]{files[i].toString().substring(28)});
 
+    }
+    public void displayfile(){
+        FileDialog dialog = new FileDialog(this, "Select File to Open");
+        dialog.setMode(FileDialog.LOAD);
+        dialog.setVisible(true);
+        String file = dialog.getFile();
+        String directory = dialog.getDirectory();
+        System.out.println(file + " chosen.");
+        // pass filepath instead of calling inputdialog box
+        DrawPanel.runProg(directory + file);
     }
 
 
