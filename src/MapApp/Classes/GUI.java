@@ -134,9 +134,10 @@ public class GUI extends JFrame {
         dialog.setMode(FileDialog.LOAD);
         dialog.setVisible(true);
         String file = dialog.getFile();
+        String directory = dialog.getDirectory();
         System.out.println(file + " chosen.");
         // pass filepath instead of calling inputdialog box
-        DrawPanel.runProg(file);
+        DrawPanel.runProg(directory + file);
     }
 
 
