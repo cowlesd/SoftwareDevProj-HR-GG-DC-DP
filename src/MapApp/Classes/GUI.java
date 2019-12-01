@@ -28,7 +28,7 @@ public class GUI extends JFrame {
      * including
      */
     public GUI(){
-
+        JFileChooser fc = new JFileChooser();
         setTitle("MapApp Main Menu");
         setSize(400,200);
         setBackground(Color.black);
@@ -94,13 +94,7 @@ public class GUI extends JFrame {
         newMap.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FileDialog input = new FileDialog((Frame)null, "Select File to Open");
-                input.setMode(FileDialog.LOAD);
-                input.setVisible(true);
-                String filePath = input.getDirectory() + input.getFile();
-                //System.out.println(file + " chosen.");
-                // pass filepath instead of calling inputdialog box
-                DrawPanel.runProg(filePath);
+                displayfile();
             }
         });
         quit.addActionListener(new ActionListener() {
@@ -134,6 +128,15 @@ public class GUI extends JFrame {
         for (int i = 0; i < files.length; i++)
             modl.addRow(new Object[]{files[i].toString().substring(28)});
 
+    }
+    public void displayfile(){
+        FileDialog dialog = new FileDialog(this, "Select File to Open");
+        dialog.setMode(FileDialog.LOAD);
+        dialog.setVisible(true);
+        String file = dialog.getFile();
+        System.out.println(file + " chosen.");
+        // pass filepath instead of calling inputdialog box
+        DrawPanel.runProg(file);
     }
 
 
