@@ -94,7 +94,13 @@ public class GUI extends JFrame {
         newMap.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DrawPanel.runProg(JOptionPane.showInputDialog("Enter file path for image"));
+                FileDialog input = new FileDialog((Frame)null, "Select File to Open");
+                input.setMode(FileDialog.LOAD);
+                input.setVisible(true);
+                String filePath = input.getDirectory() + input.getFile();
+                //System.out.println(file + " chosen.");
+                // pass filepath instead of calling inputdialog box
+                DrawPanel.runProg(filePath);
             }
         });
         quit.addActionListener(new ActionListener() {
