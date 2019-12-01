@@ -1,4 +1,4 @@
-C:\Users\Heato\IdeaProjects\SoftwareDevProj-HR-GG-DC-DP\src\main\resources\MappingLayoutNaked-page-0.png
+src\main\resources\MappingLayoutNaked-page-0.png
 A0 269 317
 A7 58 A1 78 
 A1 267 395
