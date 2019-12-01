@@ -137,6 +137,10 @@ public class GUI extends JFrame {
         String directory = dialog.getDirectory();
         System.out.println(file + " chosen.");
         // pass filepath instead of calling inputdialog box
+        JOptionPane.showMessageDialog(this, "Press \"x\" " +
+                "to swap between node types, the default type is a waypoint node, " +
+                "the second type is a destination node, and the third is a map " +
+                "connection node . Press s to submit");
         DrawPanel.runProg(directory + file);
     }
 
