@@ -63,15 +63,23 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int currentRow = table.getSelectedRow();
-                String mapName = (String)table.getValueAt(currentRow, 0);
-                String startPoint = JOptionPane.showInputDialog("What is the name of your starting point?");
-                String endPoint = JOptionPane.showInputDialog("What is the name of your destination point?");
-                try {
-                    dijkstraProcesser = new DijkstraProcesser(startPoint, endPoint, "src/main/resources/MapFiles/" +
-                            mapName + "/NodeSource.txt");
-                    dijkstraProcesser.loadAdjacencyMatrix();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
+                if (currentRow != -1) {
+
+
+                    String mapName = (String) table.getValueAt(currentRow, 0);
+                    try {
+                        String startPoint = JOptionPane.showInputDialog("What is the name of your starting point?");
+                        String endPoint = JOptionPane.showInputDialog("What is the name of your destination point?");
+                        try {
+                            dijkstraProcesser = new DijkstraProcesser(startPoint, endPoint, "src/main/resources/MapFiles/" +
+                                    mapName + "/NodeSource.txt");
+                            dijkstraProcesser.loadAdjacencyMatrix();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    } catch (NumberFormatException num) {
+
+                    }
                 }
 
                 /****************************************************/
