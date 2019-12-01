@@ -3,12 +3,11 @@ package MapApp.Classes;
 import java.awt.*;
 import java.io.*;
 import java.util.*;
-import java.util.List;
 
 /**
  * Calculator for the shortest path
  */
-public class DijkstraProcesser {
+public class DijkstraProcesserOld {
     /**
      * String representing the file path for the map image
      */
@@ -64,10 +63,10 @@ public class DijkstraProcesser {
      * Default constructor for DijkstraProcessor class
      *
      * @param startPoint the starting node
-     * @param endPoint   the ending node
-     * @param mapName    the name of the map
+     * @param endPoint the ending node
+     * @param mapName the name of the map
      */
-    public DijkstraProcesser(String startPoint, String endPoint, String mapName) {
+    public DijkstraProcesserOld(String startPoint, String endPoint, String mapName) {
         nodeList = new ArrayList<>();
         shortestPath = new ArrayList<>();
         shortestPathNodes = new ArrayList<>();
@@ -78,7 +77,6 @@ public class DijkstraProcesser {
 
     /**
      * Fills nodes ArrayList with data
-     *
      * @throws IOException
      */
     public void loadAdjacencyMatrix() throws IOException {
@@ -98,7 +96,7 @@ public class DijkstraProcesser {
         String name = "";
         int x;
         int y;
-        while ((str = br.readLine()) != null) {
+        while ((str = br.readLine()) != null){
             name = str.substring(0, str.indexOf(" "));
             str = str.substring(str.indexOf(" ") + 1);
             x = Integer.parseInt(str.substring(0, str.indexOf(" ")));
@@ -107,14 +105,14 @@ public class DijkstraProcesser {
 
             boolean hasAdj = false;
             for (int i = 0; i < nodeList.size(); i++) {
-                if (nodeList.get(i).getID().equals(name)) {
+                if (nodeList.get(i).getID().equals(name)){
                     nodeList.get(i).setLocX(x);
                     nodeList.get(i).setLocY(y);
                     hasAdj = true;
                 }
             }
-            if (!hasAdj) {
-                nodeList.add(new Node(new Point(x, y), name));
+            if(!hasAdj){
+                nodeList.add(new Node(new Point(x,y), name));
             }
 
             str = br.readLine();
@@ -123,34 +121,35 @@ public class DijkstraProcesser {
             int adjWeight = 0;
             int currentIndex = 0;
             hasAdj = false;
-            for (int i = 0; i < nodeList.size(); i++) {
-                if (nodeList.get(i).getID().equals(name))
+            for(int i = 0; i < nodeList.size(); i++){
+                if(nodeList.get(i).getID().equals(name))
                     currentIndex = i;
             }
             while (str != "") {
                 adjName = str.substring(0, str.indexOf(" "));
                 str = str.substring(str.indexOf(" ") + 1);
-                if (str.contains(" ")) {
+                if(str.contains(" ")) {
                     adjWeight = Integer.parseInt(str.substring(0, str.indexOf(" ")));
                     str = str.substring(str.indexOf(" ") + 1);
-                } else {
+                }
+                else{
                     adjWeight = Integer.parseInt(str);
                     str = "";
                 }
 
                 for (int i = 0; i < nodeList.size(); i++) {
-                    if (nodeList.get(i).getID().equals(adjName)) {
+                    if (nodeList.get(i).getID().equals(adjName)){
                         nodeList.get(currentIndex).addAdjacent(nodeList.get(i), adjWeight);
                         nodeList.get(currentIndex).addAdjacent(nodeList.get(nodeList.size() - 1), adjWeight);
                         hasAdj = true;
                     }
                 }
-                if (!hasAdj) {
+                if(!hasAdj) {
                     nodeList.add(new Node(new Point(0, 0), adjName));
                     nodeList.get(currentIndex).addAdjacent(nodeList.get(nodeList.size() - 1), adjWeight);
                 }
 
-                if (str.equals(""))
+                if(str.equals(""))
                     break;
             }
         }
@@ -163,14 +162,14 @@ public class DijkstraProcesser {
     /**
      * Loads the arrayList into an easy-to-manage format
      */
-    public void loadArray() {
+    public void loadArray(){
         graph = new int[numVertices][numVertices];
-        for (int i = 0; i < numVertices; i++) {
+        for(int i = 0; i < numVertices; i++){
             ArrayList<Node> adjacentList = nodeList.get(i).getAdjacent();
             ArrayList<Integer> weightList = nodeList.get(i).getWeight();
-            for (int j = 0; j < adjacentList.size(); j++) {
-                for (int k = 0; k < numVertices; k++) {
-                    if (adjacentList.get(j).getID().equals(nodeList.get(k).getID())) {
+            for(int j = 0; j < adjacentList.size(); j++){
+                for(int k = 0; k < numVertices; k++){
+                    if(adjacentList.get(j).getID().equals(nodeList.get(k).getID())){
                         graph[i][k] = weightList.get(j);
                     }
                 }
@@ -181,11 +180,11 @@ public class DijkstraProcesser {
     /**
      * Marks the start and end points, given the string representation
      */
-    public void markStartEnd() {
-        for (int i = 0; i < numVertices; i++) {
-            if (nodeList.get(i).getID().equals(startPoint))
+    public void markStartEnd(){
+        for(int i = 0; i < numVertices; i++){
+            if(nodeList.get(i).getID().equals(startPoint))
                 startIndex = i;
-            if (nodeList.get(i).getID().equals(endPoint))
+            if(nodeList.get(i).getID().equals(endPoint))
                 endIndex = i;
         }
     }
@@ -193,10 +192,10 @@ public class DijkstraProcesser {
     /**
      * Prints all node names and distance from start
      * Used for testing
-     *
      * @param dist Array of distances from start for each node
      */
-    void printSolution(int dist[]) {
+    void printSolution(int dist[])
+    {
         System.out.println("Vertex \t\t Distance from Source");
         for (int i = 0; i < numVertices; i++)
             System.out.println(nodeList.get(i).getID() + " " + i + " \t\t " + dist[i]);
@@ -204,12 +203,12 @@ public class DijkstraProcesser {
 
     /**
      * Finds the node with the minimum distance from all possible nodes
-     *
-     * @param dist   current distances of each node
+     * @param dist current distances of each node
      * @param sptSet contains true if node has been traversed, false if not
      * @return The index of the node with the minimum distance
      */
-    int minDistance(int dist[], Boolean sptSet[]) {
+    int minDistance(int dist[], Boolean sptSet[])
+    {
         int min = Integer.MAX_VALUE, min_index = -1;
 
         for (int v = 0; v < numVertices; v++)
@@ -223,56 +222,60 @@ public class DijkstraProcesser {
 
     /**
      * The dijkstra algorithm, which finds the shortest path through all points. Terminates at the end point
-     *
      * @param graph nodes to search
-     * @param source   Index of the starting node
+     * @param src Index of the starting node
      */
-    void dijkstra(int graph[][], int source) {
+    void dijkstra(int graph[][], int src)
+    {
+        int dist[] = new int[numVertices];
 
-        nodeList.get(source).setMinDistance(0.);
-        PriorityQueue<Node> nodeQueue = new PriorityQueue<Node>();
-        nodeQueue.add(nodeList.get(source));
+        Boolean sptSet[] = new Boolean[numVertices];
 
-        while (!nodeQueue.isEmpty()) {
-            Node u = nodeQueue.poll();
-
-            // Visit each node connected to u
-            for (Node v : u.adjacent) {
-                int i = 0;
-                while((i < v.adjacent.size() - 1) && v.getAdjacent(i) != u){
-                    i++;
-                }
-                double weight = v.getWeight(i);
-                double distanceThroughU = u.getMinDistance() + weight;
-                if (distanceThroughU < v.getMinDistance()) {
-                    nodeQueue.remove(v);
-
-                    v.setMinDistance(distanceThroughU);
-                    v.setPrevious(u);
-                    nodeQueue.add(v);
-                }
-            }
+        for (int i = 0; i < numVertices; i++) {
+            dist[i] = Integer.MAX_VALUE;
+            sptSet[i] = false;
         }
 
-        int i;
-        Node endNode = nodeList.get(0);
-        for(i = 0; i < nodeList.size(); i++){
-            if(nodeList.get(i).getID().equals(endPoint))
-                endNode = nodeList.get(i);
+        dist[src] = 0;
+
+        for (int count = 0; count < numVertices - 1; count++) {
+
+            int u = minDistance(dist, sptSet);
+
+            sptSet[u] = true;
+            if(u == endIndex)
+                break;
+
+            for (int v = 0; v < numVertices; v++)
+
+                if (!sptSet[v] && graph[u][v] != 0 && dist[u] != Integer.MAX_VALUE && dist[u] + graph[u][v] < dist[v]) {
+                    dist[v] = dist[u] + graph[u][v];
+                    Integer[] coords = new Integer[2];
+                    coords[0] = nodeList.get(u).getLocX();
+                    coords[1] = nodeList.get(u).getLocY();
+                    shortestPath.add(coords);
+                    shortestPathNodes.add(nodeList.get(u));
+                }
         }
-        getShortestPathTo(endNode);
+
+        printSolution(dist);
+        findSolution();
         DisplayPath display = new DisplayPath();
         display.runProg(mapPath, shortestPath);
         display.repaint();
     }
 
-    public List<Integer[]> getShortestPathTo(Node target)
-    {
-        for (Node vertex = target; vertex != null; vertex = vertex.getPrevious())
-            shortestPath.add(new Integer[]{new Integer(vertex.getLocX()), new Integer(vertex.getLocY())});
-
-        Collections.reverse(shortestPath);
-        return shortestPath;
+    /**
+     * Finds the complete solution, cleaning up the output from the algorithm
+     */
+    void findSolution() {
+        int i = shortestPathNodes.size() - 1;
+        while(i > 0){
+            if(!shortestPathNodes.get(i).getAdjacent().contains(shortestPathNodes.get(i-1))){
+                shortestPathNodes.remove(i-1);
+                shortestPath.remove(i-1);
+            }
+            i--;
+        }
     }
 }
-
