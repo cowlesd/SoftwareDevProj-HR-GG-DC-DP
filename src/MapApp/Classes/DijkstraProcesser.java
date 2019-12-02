@@ -134,10 +134,11 @@ public class DijkstraProcesser {
                 if (str.contains(" ")) {
                     adjWeight = Integer.parseInt(str.substring(0, str.indexOf(" ")));
                     str = str.substring(str.indexOf(" ") + 1);
-                } else {
-                    adjWeight = Integer.parseInt(str);
-                    str = "";
                 }
+//                else {
+//                    adjWeight = Integer.parseInt(str);
+//                    str = "";
+//                }
 
                 for (int i = 0; i < nodeList.size(); i++) {
                     if (nodeList.get(i).getID().equals(adjName)) {
@@ -193,36 +194,36 @@ public class DijkstraProcesser {
         }
     }
 
-    /**
-     * Prints all node names and distance from start
-     * Used for testing
-     *
-     * @param dist Array of distances from start for each node
-     */
-    void printSolution(int dist[]) {
-        System.out.println("Vertex \t\t Distance from Source");
-        for (int i = 0; i < numVertices; i++)
-            System.out.println(nodeList.get(i).getID() + " " + i + " \t\t " + dist[i]);
-    }
-
-    /**
-     * Finds the node with the minimum distance from all possible nodes
-     *
-     * @param dist   current distances of each node
-     * @param sptSet contains true if node has been traversed, false if not
-     * @return The index of the node with the minimum distance
-     */
-    int minDistance(int dist[], Boolean sptSet[]) {
-        int min = Integer.MAX_VALUE, min_index = -1;
-
-        for (int v = 0; v < numVertices; v++)
-            if (sptSet[v] == false && dist[v] <= min) {
-                min = dist[v];
-                min_index = v;
-            }
-
-        return min_index;
-    }
+//    /**
+//     * Prints all node names and distance from start
+//     * Used for testing
+//     *
+//     * @param dist Array of distances from start for each node
+//     */
+//    void printSolution(int dist[]) {
+//        System.out.println("Vertex \t\t Distance from Source");
+//        for (int i = 0; i < numVertices; i++)
+//            System.out.println(nodeList.get(i).getID() + " " + i + " \t\t " + dist[i]);
+//    }
+//
+//    /**
+//     * Finds the node with the minimum distance from all possible nodes
+//     *
+//     * @param dist   current distances of each node
+//     * @param sptSet contains true if node has been traversed, false if not
+//     * @return The index of the node with the minimum distance
+//     */
+//    int minDistance(int dist[], Boolean sptSet[]) {
+//        int min = Integer.MAX_VALUE, min_index = -1;
+//
+//        for (int v = 0; v < numVertices; v++)
+//            if (sptSet[v] == false && dist[v] <= min) {
+//                min = dist[v];
+//                min_index = v;
+//            }
+//
+//        return min_index;
+//    }
 
     /**
      * The dijkstra algorithm, which finds the shortest path through all points. Terminates at the end point
