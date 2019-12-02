@@ -105,15 +105,16 @@ public class DijkstraProcesser {
             str = str.substring(str.indexOf(" ") + 1);
             y = Integer.parseInt(str);
 
-            boolean hasAdj = false;
+            boolean hasNode = false;
             for (int i = 0; i < nodeList.size(); i++) {
                 if (nodeList.get(i).getID().equals(name)) {
                     nodeList.get(i).setLocX(x);
                     nodeList.get(i).setLocY(y);
-                    hasAdj = true;
+                    hasNode = true;
+                    break;
                 }
             }
-            if (!hasAdj) {
+            if (!hasNode) {
                 nodeList.add(new Node(new Point(x, y), name));
             }
 
@@ -122,12 +123,12 @@ public class DijkstraProcesser {
             String adjName = "";
             int adjWeight = 0;
             int currentIndex = 0;
-            hasAdj = false;
             for (int i = 0; i < nodeList.size(); i++) {
                 if (nodeList.get(i).getID().equals(name))
                     currentIndex = i;
             }
             while (str != "") {
+                boolean hasAdj = false;
                 adjName = str.substring(0, str.indexOf(" "));
                 str = str.substring(str.indexOf(" ") + 1);
                 if (str.contains(" ")) {
@@ -140,8 +141,10 @@ public class DijkstraProcesser {
 
                 for (int i = 0; i < nodeList.size(); i++) {
                     if (nodeList.get(i).getID().equals(adjName)) {
-                        nodeList.get(currentIndex).addAdjacent(nodeList.get(i), adjWeight);
-                        nodeList.get(currentIndex).addAdjacent(nodeList.get(nodeList.size() - 1), adjWeight);
+                        if(hasNode)
+                            nodeList.get(currentIndex).addAdjacent(nodeList.get(i), adjWeight);
+                        else
+                            nodeList.get(currentIndex).addAdjacent(nodeList.get(nodeList.size() - 1), adjWeight);
                         hasAdj = true;
                     }
                 }
