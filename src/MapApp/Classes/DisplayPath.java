@@ -49,7 +49,7 @@ public class DisplayPath extends JPanel {
         try {
             BufferedImage image = ImageIO.read(new File(filePath));
             g.drawImage(image, 0, 0,getWidth(), getHeight(), null);
-
+            gDraw.setStroke(new BasicStroke(4));
             for (int i = 0; i < coordinateList.size() - 1; i++) {
                 int x1 = (int)coordinateList.get(i)[0];
                 int y1 = coordinateList.get(i)[1] -3;//modification of coordinates to provide accurate location
