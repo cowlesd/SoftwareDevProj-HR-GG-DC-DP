@@ -1,5 +1,7 @@
 package MapApp.Classes;
 
+//import javafx.scene.control.skin.TextInputControlSkin;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -7,12 +9,16 @@ import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.io.File;
 import java.io.IOException;
+import java.net.NoRouteToHostException;
 import java.util.ArrayList;
 
 /**
  *Class to display the path (shortest) after it is found. Child of JPanel.
  */
 public class DisplayPath extends JPanel {
+    enum Direction{
+        NORTH, SOUTH, EAST, WEST;
+    }
     /**
      * Address of the file to be used/drawn upon
      */
@@ -42,6 +48,7 @@ public class DisplayPath extends JPanel {
      */
     @Override
     public void paintComponent(Graphics g) {
+        Direction d = null;
         super.paintComponent(g);
         Graphics2D gDraw = (Graphics2D) g;
         gDraw.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -57,6 +64,71 @@ public class DisplayPath extends JPanel {
                 int y2 = coordinateList.get(i+1)[1] -3;
                 gDraw.drawLine(x1, y1, x2, y2);
 
+                if(d == null){
+                    if(x2 - x1 > 20){
+                        d = Direction.EAST;
+                    }
+                    else if(x1 - x2 > 20){
+                        d = Direction.WEST;
+                    }
+                    else if(y2 - y1 > 20){
+                        d = Direction.SOUTH;
+                    }
+                    else if(y1 - y2 > 20){
+                        d = Direction.NORTH;
+                    }
+                    System.out.println("Begin walking " + d);
+                }
+                else{
+                    switch (d){
+                        case NORTH:
+                            if(x2 - x1 > 20){
+                                System.out.println("Turn right.");
+                                d = Direction.EAST;
+                            } else if(x1 - x2 > 20){
+                                System.out.println("Turn left.");
+                                d = Direction.WEST;
+                            } else if(y1 - y2 > 20){
+                                System.out.println("Continue north.");
+                            }
+                            break;
+                        case SOUTH:
+                            if(x1 - x2 > 20){
+                                System.out.println("Turn right");
+                                d = Direction.WEST;
+                            } else if(x2 - x1 > 20){
+                                System.out.println("Turn left.");
+                                d = Direction.EAST;
+                            } else if(y2 - y1 > 20){
+                                System.out.println("Continue south.");
+                            }
+                            break;
+                        case EAST:
+                            if(y2 - y1 > 20){
+                                System.out.println("Turn right.");
+                                d = Direction.SOUTH;
+                            } else if(y1 - y2 > 20){
+                                System.out.println("Turn left.");
+                                d = Direction.NORTH;
+                            } else if(x2 - x1 > 20){
+                                System.out.println("Continue east.");
+                            }
+                            break;
+                        case WEST:
+                            if(y1 - y2 > 20){
+                                System.out.println("Turn right.");
+                                d = Direction.NORTH;
+                            } else if(y2 - y1 > 20){
+                                System.out.println("Turn left.");
+                                d = Direction.SOUTH;
+                            } else if(x1 - x2 > 20){
+                                System.out.println("Continue west.");
+                            }
+                    }
+                }
+                if(i == coordinateList.size() - 2){
+                    System.out.println("You have arrived at your destination.");
+                }
             }
 
         }catch (IOException e){
