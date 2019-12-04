@@ -266,9 +266,7 @@ public class DijkstraProcesser {
         }
         getShortestPathTo(endNode);
         DisplayPath display = new DisplayPath();
-        System.out.println("**********************" + shortestPathNodes.size());
         display.runProg(mapPath, shortestPath);
-        display.repaint();
     }
 
     public List<Integer[]> getShortestPathTo(Node target)
