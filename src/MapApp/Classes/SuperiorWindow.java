@@ -10,6 +10,10 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 
@@ -141,6 +145,8 @@ public class SuperiorWindow extends JFrame implements ActionListener {
            status = 5;
        } else if(actionEvent.getSource() == checkID) {
            status = 6;
+       }else if(actionEvent.getSource() == Save){
+           saveData(nodes, filePath, JOptionPane.showInputDialog("Please enter a name for your save.") );
        }
 
 
@@ -419,6 +425,35 @@ public class SuperiorWindow extends JFrame implements ActionListener {
 
        InsetX = X -1;
        InsetY = Y -1;
+
+
+    }
+
+    private static void saveData(ArrayList<Node> nodes, String filePath, String name) {
+
+        Path storageDir = Paths.get("src/main/resources/MapFiles/" + name);
+        try {
+            Files.createDirectories(storageDir);
+
+            PrintWriter writer = new PrintWriter("src/main/resources/MapFiles/" +
+                    name+ "/NodeSource.txt", "UTF-8");
+            writer.println(filePath);
+
+            for(Node node: nodes) {
+                writer.println(node.getID() + " " + node.getLocX() + " " + node.getLocY());
+                for (int i =0;i<node.getAdjacent().size();i++) {
+                    writer.print(node.getAdjacent().get(i).getID() + " ");
+                    writer.print(node.getWeight().get(i)+ " ");
+                }
+                writer.println();
+            }
+
+            writer.close();
+
+
+        }catch (IOException e) {
+            System.out.println("Fail");
+        }
 
 
     }
