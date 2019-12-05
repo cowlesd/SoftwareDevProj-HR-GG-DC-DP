@@ -8,12 +8,12 @@ import java.util.ArrayList;
  * The class used to represent and contain the information of/at a particular point of the building.
  * Contains all information pertaining to 'this' location.
  */
-public class Node {
+public class Node implements Comparable<Node> {
 
     /**
-     * ArrayList containing the nodes adjacent to 'this' node
+     * ArrayList containing the nodes adjac ent to 'this' node
      */
-    private ArrayList<Node> adjacent = new ArrayList<>();
+    public ArrayList<Node> adjacent = new ArrayList<>();
 
     /**
      * ArrayList containing the weight of this node when compared to adjacent nodes
@@ -34,6 +34,26 @@ public class Node {
      * Unique ID of 'this' node
      */
     private String nodeID;
+
+    public Node getPrevious() {
+        return previous;
+    }
+
+    public void setPrevious(Node previous) {
+        this.previous = previous;
+    }
+
+    private Node previous;
+
+    public double getMinDistance() {
+        return minDistance;
+    }
+
+    public void setMinDistance(double minDistance) {
+        this.minDistance = minDistance;
+    }
+
+    private double minDistance = Double.POSITIVE_INFINITY;
 
     /**
      * Default constructor taking location and ID
@@ -82,15 +102,15 @@ public class Node {
      */
     public String getID() { return nodeID; }
 
-    /**
-     *Prints the adjacent node's ID's in the console
-     */
-    public void printAdjacent() {
-        for (Node node: adjacent) {
-            System.out.print("  " + node.nodeID);
-        }
-        System.out.println();
-    }
+//    /**
+//     *Prints the adjacent node's ID's in the console
+//     */
+//    public void printAdjacent() {
+//        for (Node node: adjacent) {
+//            System.out.print("  " + node.nodeID);
+//        }
+//        System.out.println();
+//    }
 
     /**
      * Getter for ArrayList of nodes adjacent to 'this' node
@@ -100,6 +120,9 @@ public class Node {
     public ArrayList<Node> getAdjacent() {
         return adjacent;
     }
+    public Node getAdjacent(int i) {
+        return adjacent.get(i);
+    }
 
     /**
      * Getter for the ArrayList of weights between 'this' node and adjacent nodes
@@ -108,6 +131,13 @@ public class Node {
      */
     public ArrayList<Integer> getWeight() {
         return weight;
+    }
+    public int getWeight(int i) {
+        return weight.get(i);
+    }
+    public int compareTo(Node other)
+    {
+        return Double.compare(minDistance, other.minDistance);
     }
 
 

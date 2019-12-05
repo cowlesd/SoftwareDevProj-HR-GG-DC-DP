@@ -14,4 +14,9 @@
       <entry name="!?*.txt" />
     </wildcardResourcePatterns>
   </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="SoftwareDevProj-HR-GG-DC-DP" options="--add-exports=javafx.base/javafx=ALL-UNNAMED" />
+    </option>
+  </component>
 </project>

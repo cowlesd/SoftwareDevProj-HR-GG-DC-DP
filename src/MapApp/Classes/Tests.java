@@ -9,7 +9,7 @@ public class Tests {
     public void testPaintComponent(){
 
         DisplayPath display = new DisplayPath();
-        display.DrawPanel("src/main/resources/images/test.png");
+        display.DrawPanel("src/main/resources/MappingLayoutNaked-page-0.png");
         DijkstraProcesser dijkstraProcessor;
         try{
             dijkstraProcessor = new DijkstraProcesser("A1", "A26", "src/main/resources/MapFiles/testDijkstra/NodeSource.txt");
@@ -27,7 +27,7 @@ public class Tests {
 
         DrawPanel.runProg("src/main/resources/MapFiles/testDijkstra/NodeSource.txt");
         DrawPanel drawPanel;
-        drawPanel = new DrawPanel("src/main/resources/images/test.png");
+        drawPanel = new DrawPanel("src/main/resources/MappingLayoutNaked-page-0.png");
         drawPanel.repaint();
         drawPanel.getNodes();
 
@@ -47,4 +47,9 @@ public class Tests {
 
 
     }
+    @Test
+    public void clearCoverage(){
+
+    }
+
 }
