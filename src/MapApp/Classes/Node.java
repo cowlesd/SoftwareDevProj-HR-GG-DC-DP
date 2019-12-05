@@ -102,15 +102,15 @@ public class Node implements Comparable<Node> {
      */
     public String getID() { return nodeID; }
 
-    /**
-     *Prints the adjacent node's ID's in the console
-     */
-    public void printAdjacent() {
-        for (Node node: adjacent) {
-            System.out.print("  " + node.nodeID);
-        }
-        System.out.println();
-    }
+//    /**
+//     *Prints the adjacent node's ID's in the console
+//     */
+//    public void printAdjacent() {
+//        for (Node node: adjacent) {
+//            System.out.print("  " + node.nodeID);
+//        }
+//        System.out.println();
+//    }
 
     /**
      * Getter for ArrayList of nodes adjacent to 'this' node
