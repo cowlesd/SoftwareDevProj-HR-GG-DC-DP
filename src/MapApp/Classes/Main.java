@@ -15,6 +15,9 @@ public class Main {
         GUI gui = new GUI();
         gui.setVisible(true);
 
+//        SuperiorWindow neew = new SuperiorWindow();
+//        neew.setVisible(true);
+
         //DrawPanel.runProg(JOptionPane.showInputDialog("Enter file path for image"));
 
 

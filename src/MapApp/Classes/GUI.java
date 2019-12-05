@@ -130,18 +130,20 @@ public class GUI extends JFrame {
 
     }
     public void displayfile(){
-        FileDialog dialog = new FileDialog(this, "Select File to Open");
-        dialog.setMode(FileDialog.LOAD);
-        dialog.setVisible(true);
-        String file = dialog.getFile();
-        String directory = dialog.getDirectory();
-        System.out.println(file + " chosen.");
-        // pass filepath instead of calling inputdialog box
-        JOptionPane.showMessageDialog(this, "Press \"x\" " +
-                "to swap between node types, the default type is a waypoint node, " +
-                "the second type is a destination node, and the third is a map " +
-                "connection node . Press s to submit");
-        DrawPanel.runProg(directory + file);
+//        FileDialog dialog = new FileDialog(this, "Select File to Open");
+//        dialog.setMode(FileDialog.LOAD);
+//        dialog.setVisible(true);
+//        String file = dialog.getFile();
+//        String directory = dialog.getDirectory();
+//        System.out.println(file + " chosen.");
+//        // pass filepath instead of calling inputdialog box
+//        JOptionPane.showMessageDialog(this, "Press \"x\" " +
+//                "to swap between node types, the default type is a waypoint node, " +
+//                "the second type is a destination node, and the third is a map " +
+//                "connection node . Press s to submit");
+//        DrawPanel.runProg(directory + file);
+        SuperiorWindow neew = new SuperiorWindow();
+        neew.setVisible(true);
     }
 
 
