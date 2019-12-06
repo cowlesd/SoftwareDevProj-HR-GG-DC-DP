@@ -143,7 +143,9 @@ public class GUI extends JFrame {
 //                "connection node . Press s to submit");
 //        DrawPanel.runProg(directory + file);
         SuperiorWindow neew = new SuperiorWindow();
+        neew.setTitle("Navigatr MapCreatr");
         neew.setVisible(true);
+        neew.notifyOfCalibration();
     }
 
 
