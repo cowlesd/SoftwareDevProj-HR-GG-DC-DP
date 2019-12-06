@@ -4,8 +4,6 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.io.*;
 
@@ -21,10 +19,10 @@ public class GUI extends JFrame {
     DefaultTableModel modl = new DefaultTableModel();
     private DijkstraProcesser dijkstraProcesser;
 
-    public GUI(){
+    public GUI() {
         JFileChooser fc = new JFileChooser();
         setTitle("MapApp Main Menu");
-        setSize(400,200);
+        setSize(400, 200);
         setBackground(Color.black);
 
         table = new JTable(modl);
@@ -41,7 +39,7 @@ public class GUI extends JFrame {
         getContentPane().add(topPanel);
         getContentPane().add(btnPanel);
         scrollPane = new JScrollPane(table);
-        topPanel.add(scrollPane,BorderLayout.CENTER);
+        topPanel.add(scrollPane, BorderLayout.CENTER);
 
         JButton newMap = new JButton("New Map");
         JButton refresh = new JButton("Refresh");
@@ -65,8 +63,8 @@ public class GUI extends JFrame {
                         String startPoint = JOptionPane.showInputDialog("What is the name of your starting point?");
                         String endPoint = JOptionPane.showInputDialog("What is the name of your destination point?");
                         try {
-                            dijkstraProcesser = new DijkstraProcesser(startPoint, endPoint, "src/main/resources/MapFiles/" +
-                                    mapName + "/NodeSource.txt");
+                            dijkstraProcesser = new DijkstraProcesser(startPoint, endPoint, "src/main/resources/MapFiles/"
+                                    + mapName + "/NodeSource.txt");
                             dijkstraProcesser.loadAdjacencyMatrix();
                         } catch (IOException ex) {
                             ex.printStackTrace();
@@ -75,8 +73,6 @@ public class GUI extends JFrame {
 
                     }
                 }
-
-                /****************************************************/
             }
         });
         refresh.addActionListener(new ActionListener() {
@@ -109,13 +105,13 @@ public class GUI extends JFrame {
 
     /**
      *
-     *Method to fill the table of buildings available to navigate
+     *Method to fill the table of buildings available to navigate.
      *
      */
     public void fillTable() {
         File path = new File("src/main/resources/MapFiles");
 
-        File [] files = path.listFiles();
+        File[] files = path.listFiles();
         System.out.println(modl.getRowCount());
         modl.setRowCount(0);
 
@@ -127,9 +123,9 @@ public class GUI extends JFrame {
     }
 
     /**
-     * Method to display the selected file
+     * Method to display the selected file.
      */
-    public void displayfile(){
+    public void displayfile() {
 //        FileDialog dialog = new FileDialog(this, "Select File to Open");
 //        dialog.setMode(FileDialog.LOAD);
 //        dialog.setVisible(true);

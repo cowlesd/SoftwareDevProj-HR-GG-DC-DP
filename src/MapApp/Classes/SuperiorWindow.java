@@ -40,7 +40,7 @@ public class SuperiorWindow extends JFrame implements ActionListener {
     JMenuBar mb = new JMenuBar();
     JMenuItem Save = new JMenuItem("Save");
     JMenuItem getCodeRep = new JMenuItem("Generate \nAdjacency List");
-    JCheckBoxMenuItem customWeightitem= new JCheckBoxMenuItem("Custom Weight");
+    JCheckBoxMenuItem customWeightitem = new JCheckBoxMenuItem("Custom Weight");
     JMenu menu1;
 
     ArrayList<Point> ContextPoints = new ArrayList<>();
@@ -55,8 +55,10 @@ public class SuperiorWindow extends JFrame implements ActionListener {
 
     String filePath = new String();
 
-    /**** Insets ***/
+    /**** Insets X ***/
     static int InsetX = 0;
+
+    /**** Insets Y ***/
     static int InsetY = 0;
 
     boolean flag = true;
@@ -74,7 +76,7 @@ public class SuperiorWindow extends JFrame implements ActionListener {
        container.setLayout(new BorderLayout());
 
 
-       /******** Creates, formats and populates list of buttons *******/
+       /******** Creates, formats and populates list of buttons. *******/
        btnSet = new JPanel();
        btnSet.setLayout(new GridLayout(9, 1));
        btnSet.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
@@ -91,7 +93,7 @@ public class SuperiorWindow extends JFrame implements ActionListener {
        }
 
 
-        /******** Creates and Adds A new ImagePanel *****/
+        /******** Creates and Adds A new ImagePanel. *****/
        loadFile();
        imagePanel = paintImage();
        imagePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
@@ -108,7 +110,7 @@ public class SuperiorWindow extends JFrame implements ActionListener {
 
 
 
-       /*********** Adds Menus, Panels to JFrame and finalizes frame creation *******/
+       /*********** Adds Menus, Panels to JFrame and finalizes frame creation. *******/
        container.add(btnSet, BorderLayout.WEST);
        container.add(imagePanel);
 
@@ -135,11 +137,11 @@ public class SuperiorWindow extends JFrame implements ActionListener {
      * the more aesthetic portions of SupWindow creation, as something like, say, title assignment
      * would not continue until the JOptionPane was closed.
      */
-   public void notifyOfCalibration(){
+   public void notifyOfCalibration() {
        JOptionPane.showMessageDialog(this,
-               "In order to calibrate the Graphmaker, please place the tip of \n" +
-                       "your cursor in the white box at the upper right hand corner of \n" +
-                       "the image and click once before doing any other actions.");
+               "In order to calibrate the Graphmaker, please place the tip of \n"
+                       + "your cursor in the white box at the upper right hand corner of \n"
+                       + "the image and click once before doing any other actions.");
    }
 
 
@@ -166,10 +168,10 @@ public class SuperiorWindow extends JFrame implements ActionListener {
            status = 4;
        } else if (actionEvent.getSource() == erasePointBtn) {
            status = 5;
-       } else if(actionEvent.getSource() == checkID) {
+       } else if (actionEvent.getSource() == checkID) {
            status = 6;
-       }else if(actionEvent.getSource() == Save){
-           saveData(nodes, filePath, JOptionPane.showInputDialog("Please enter a name for your save.") );
+       } else if (actionEvent.getSource() == Save) {
+           saveData(nodes, filePath, JOptionPane.showInputDialog("Please enter a name for your save."));
        } else if (actionEvent.getSource() == newFloorBtn) {
            if (flag == true) {
                this.remove(container);
@@ -197,14 +199,14 @@ public class SuperiorWindow extends JFrame implements ActionListener {
                newFloorBtn.setText("Get Path");
 
            }
-       }else if (actionEvent.getSource() == getCodeRep) {
+       } else if (actionEvent.getSource() == getCodeRep) {
            String[] values = {"Java", "Python", "6", "12", "18", "24"};
 
            Object selected = JOptionPane.showInputDialog(null, "Pick the target Language", "Language Selection", JOptionPane.DEFAULT_OPTION, null, values, "0");
-           if ( selected != null ){//null if the user cancels.
+           if (selected != null) {//null if the user cancels.
                String selectedString = selected.toString();
                //do something
-           }else{
+           } else {
                System.out.println("User cancelled");
            }
        }
@@ -215,7 +217,7 @@ public class SuperiorWindow extends JFrame implements ActionListener {
     /**
      * Method to reset the visuals of buttons.
      *
-     * @param btns The array of buttons to be reset
+     * @param btns The array of buttons to be reset.
      */
     private void resetButtonGraphics(JButton btns[]) {
        for (JButton b : btns) {
@@ -226,9 +228,9 @@ public class SuperiorWindow extends JFrame implements ActionListener {
 
     /**
      * Sets the visual of a button to a visually unique state to signify that
-     * it is currently selected
+     * it is currently selected.
      *
-     * @param btn the specific button to be selected
+     * @param btn the specific button to be selected.
      */
     private void setSelected(JButton btn) {
         btn.setBackground(Color.BLACK);
@@ -236,6 +238,11 @@ public class SuperiorWindow extends JFrame implements ActionListener {
         btn.setOpaque(true);
     }
 
+    /**
+     * Paint the found shortest path onto the map.
+     *
+     * @return a new JPanel with the desired path image.
+     */
     public JPanel paintPathImage() {
         DijkstraProcesser dijkstraProcesser = new
                 DijkstraProcesser(JOptionPane.showInputDialog("Enter start point"),
@@ -255,18 +262,18 @@ public class SuperiorWindow extends JFrame implements ActionListener {
                 gDraw.setColor(Color.blue);
                 try {
                     BufferedImage image = ImageIO.read(new File(filePath));
-                    g.drawImage(image, 0, 0,getWidth(), getHeight(), null);
+                    g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
                     gDraw.setStroke(new BasicStroke(4));
                     for (int i = 0; i < coordinateList.size() - 1; i++) {
-                        int x1 = (int)coordinateList.get(i)[0] - InsetX;
-                        int y1 = coordinateList.get(i)[1] - InsetY;//modification of coordinates to provide accurate location
-                        int x2 = coordinateList.get(i+1)[0] - InsetX;
-                        int y2 = coordinateList.get(i+1)[1] - InsetY;
+                        int x1 = (int) coordinateList.get(i)[0] - InsetX;
+                        int y1 = coordinateList.get(i)[1] - InsetY; //modification of coordinates to provide accurate location
+                        int x2 = coordinateList.get(i + 1)[0] - InsetX;
+                        int y2 = coordinateList.get(i + 1)[1] - InsetY;
                         gDraw.drawLine(x1, y1, x2, y2);
 
                     }
 
-                }catch (IOException e){
+                } catch (IOException e) {
                     System.out.print(filePath);
                 }
             }
@@ -275,9 +282,11 @@ public class SuperiorWindow extends JFrame implements ActionListener {
     }
 
     /**
-     * Method to create an image that combines the image of the map and the present nodes and edges
+     * Method to create an image that combines the image of
+     * the map and the present nodes and edges.
      *
-     * @return a newly 'drawn upon' JPanel combining the graphics of nodes/edges and the map itself
+     * @return a newly 'drawn upon' JPanel combining the graphics
+     * of nodes/edges and the map itself.
      */
     public JPanel paintImage() {
 
@@ -290,8 +299,8 @@ public class SuperiorWindow extends JFrame implements ActionListener {
                 gDraw.setColor(Color.blue);
                 try {
                     BufferedImage image = ImageIO.read(new File(filePath));
-                    g.drawImage(image, 0, 0,getWidth(), getHeight(), null);
-                    if (status== 10) {
+                    g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+                    if (status == 10) {
                         gDraw.setColor(Color.RED);
                         gDraw.fillRect(0, 0, 20, 20);
                         gDraw.setColor(Color.WHITE);
@@ -302,28 +311,28 @@ public class SuperiorWindow extends JFrame implements ActionListener {
                     gDraw.setStroke(new BasicStroke(4));
 
                     for (int i = 0; i < edges.size(); i++) {
-                        int x1 = (int)edges.get(i).get(0).getX();
+                        int x1 = (int) edges.get(i).get(0).getX();
                         int y1 = edges.get(i).get(0).y;
                         int x2 = edges.get(i).get(1).x;
                         int y2 = edges.get(i).get(1).y;
-                        gDraw.drawLine(x1 - InsetX+3, y1- InsetY+3,
-                                x2- InsetX+3, y2- InsetY+3);
+                        gDraw.drawLine(x1 - InsetX + 3, y1 - InsetY + 3,
+                                x2 - InsetX + 3, y2 - InsetY + 3);
 
                     }
 
                     gDraw.setColor(Color.blue);
                     for (Point point : ContextPoints) {
-                        gDraw.fillOval(point.x-InsetX, point.y-InsetY, 10, 10);
+                        gDraw.fillOval(point.x - InsetX, point.y - InsetY, 10, 10);
                     }
                     gDraw.setColor(Color.red);
                     for (Point point : DestinationPoints) {
-                        gDraw.fillOval(point.x-InsetX, point.y-InsetY, 10, 10);
+                        gDraw.fillOval(point.x - InsetX, point.y - InsetY, 10, 10);
                     }
                     gDraw.setColor(Color.MAGENTA);
                     for (Point point : ChangePoints) {
-                        gDraw.fillOval(point.x-InsetX, point.y-InsetY, 10, 10);
+                        gDraw.fillOval(point.x - InsetX, point.y - InsetY, 10, 10);
                     }
-           }catch (IOException e){
+           } catch (IOException e) {
                     System.out.print(filePath);
                 }
             }
@@ -332,7 +341,8 @@ public class SuperiorWindow extends JFrame implements ActionListener {
     }
 
     /**
-     * Method that performs the graphic operations requested by the user (adding nodes of various types and edges)
+     * Method that performs the graphic operations requested by the user
+     * (adding nodes of various types and edges).
      */
     public void drawOnPanel() {
         //filePath = filepath1;
@@ -343,7 +353,7 @@ public class SuperiorWindow extends JFrame implements ActionListener {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if(customWeightitem.isSelected()) {
+                if (customWeightitem.isSelected()) {
                     customWeight = true;
                 } else {
                     customWeight = false;
@@ -352,7 +362,7 @@ public class SuperiorWindow extends JFrame implements ActionListener {
                     status = 0;
                     calibrate(e.getX(), e.getY());
 
-                }else if (status == 0) {
+                } else if (status == 0) {
                     ContextPoints.add(new Point(e.getX(), e.getY()));
 //                    nodes.add(new Node(new Point(e.getX(), e.getY()),
 //                            JOptionPane.showInputDialog("Enter NodeID")));
@@ -385,12 +395,11 @@ public class SuperiorWindow extends JFrame implements ActionListener {
                         pair.clear();
 
                     }
-                } else if(status == 2) {
+                } else if (status == 2) {
                     ChangePoints.add(new Point(e.getX(), e.getY()));
                     nodes.add(new Node(new Point(e.getX(), e.getY()),
                             JOptionPane.showInputDialog("Enter NodeID")));
-                    /********************************************************************************/
-                }else if (status == 4) {
+                } else if (status == 4) {
 
                     if (null != getClosestNode(e.getX(), e.getY())) {
                         pair.add(new Point(getClosestNode(e.getX(), e.getY()).getLocX(),
@@ -408,18 +417,18 @@ public class SuperiorWindow extends JFrame implements ActionListener {
                 } else if (status == 5) {
                     if (null != getClosestNode(e.getX(), e.getY())) {
                         removeNode(getClosestNode(e.getX(), e.getY()).getLocX(),
-                                getClosestNode(e.getX(), e.getY()).getLocY()   );
+                                getClosestNode(e.getX(), e.getY()).getLocY());
                         //System.out.println("NodeSize: " + nodes.size());
                         /*** Error **/
                         nodes.remove(getClosestNode(e.getX(), e.getY()));
                         //System.out.println("NodeSize: " + nodes.size());
 
                     }
-                }else  if ( status == 6){
+                } else if (status == 6) {
                     try {
-                        JOptionPane.showMessageDialog(null, "Node ID: " +
-                                getClosestNode(e.getX(), e.getY()).getID());
-                    }catch (NullPointerException nul) {
+                        JOptionPane.showMessageDialog(null, "Node ID: "
+                                + getClosestNode(e.getX(), e.getY()).getID());
+                    } catch (NullPointerException nul) {
 
                     }
                 }
@@ -431,7 +440,7 @@ public class SuperiorWindow extends JFrame implements ActionListener {
 
     /**
      * Method to query for a file, create a string out of the filepath to the chosen file,
-     * and then modifies the filePath member to this string
+     * and then modifies the filePath member to this string.
      */
     public void loadFile() {
         FileDialog dialog = new FileDialog(this, "Select File to Open");
@@ -444,10 +453,10 @@ public class SuperiorWindow extends JFrame implements ActionListener {
     }
 
     /**
-     * Method to grab and return the node closest to the given (x, y) point
+     * Method to grab and return the node closest to the given (x, y) point.
      *
-     * @param x the x-coordinate to search from
-     * @param y the y-coordiante to search from
+     * @param x the x-coordinate to search from.
+     * @param y the y-coordiante to search from.
      * @return the node closest to (x, y).
      */
     private Node getClosestNode(int x, int y) {
@@ -458,14 +467,14 @@ public class SuperiorWindow extends JFrame implements ActionListener {
     }
 
     /**
-     * Method to calculate the pythagorean distance between two nodes
+     * Method to calculate the pythagorean distance between two nodes.
      *
-     * @param nodePair the two nodes for which distance will be found
-     * @return the pythagorean distance between the pair of nodes
+     * @param nodePair the two nodes for which distance will be found.
+     * @return the pythagorean distance between the pair of nodes.
      */
     private int getWeight(ArrayList<Node> nodePair) {
        int weight = -2;
-       if(!customWeight) {
+       if (!customWeight) {
            int xDif = Math.abs(nodePair.get(0).getLocX() - nodePair.get(1).getLocX());
            int yDif = Math.abs(nodePair.get(0).getLocY() - nodePair.get(1).getLocY());
            int finalDif = (int) Math.pow(xDif, 2) + (int) Math.pow(yDif, 2);
@@ -474,7 +483,7 @@ public class SuperiorWindow extends JFrame implements ActionListener {
        } else {
            try {
                weight = Integer.parseInt(JOptionPane.showInputDialog("Please enter a line weight"));
-           }catch (Exception e) {
+           } catch (Exception e) {
                while (weight == -2) {
                    weight = Integer.parseInt(JOptionPane.showInputDialog("Please enter a valid line weight"));
                }
@@ -485,14 +494,14 @@ public class SuperiorWindow extends JFrame implements ActionListener {
     }
 
     /**
-     * Method to compare two points and return whether they exist in the same space or not
+     * Method to compare two points and return whether they exist in the same space or not.
      *
-     * @param p1 the first point to compare
-     * @param p2 the second point to compare to
-     * @return true if the points possess the same coordinates, false otherwise
+     * @param p1 the first point to compare.
+     * @param p2 the second point to compare to.
+     * @return true if the points possess the same coordinates, false otherwise.
      */
     private boolean comparePoints(Point p1, Point p2) {
-       if (p1.equals(p2) ){
+       if (p1.equals(p2) ) {
            return true;
         }
        return false;
@@ -500,10 +509,10 @@ public class SuperiorWindow extends JFrame implements ActionListener {
 
     private boolean comparePairs(ArrayList<Point> p1, ArrayList<Point> p2) {
        int match = 0;
-        for(Point p : p1) {
+        for (Point p : p1) {
             for (Point o : p2) {
                 if (comparePoints(o, p)) {
-                    match ++;
+                    match++;
                 }
             }
         }
@@ -514,21 +523,21 @@ public class SuperiorWindow extends JFrame implements ActionListener {
     }
 
     /**
-     * Method to remove an edge between two points
+     * Method to remove an edge between two points.
      *
-     * @param pair a pair containing the two points between which the edge will be removed
+     * @param pair a pair containing the two points between which the edge will be removed.
      */
     public void removeEdge(ArrayList<Point> pair) {
 
         Node rmNode;
         for (ArrayList<Point> p : edges) {
-            if(comparePairs(p, pair)){
+            if (comparePairs(p, pair)) {
                 edges.remove(p);
-                getClosestNode((int)p.get(0).getX(), (int)p.get(0).getY()).
-                        removeFromAdjacent(getClosestNode((int)p.get(1).getX(), (int)p.get(1).getY()));
+                getClosestNode((int) p.get(0).getX(), (int) p.get(0).getY()).
+                        removeFromAdjacent(getClosestNode((int) p.get(1).getX(), (int) p.get(1).getY()));
 
-                getClosestNode((int)p.get(1).getX(), (int)p.get(1).getY()).
-                        removeFromAdjacent(getClosestNode((int)p.get(0).getX(), (int)p.get(0).getY()));
+                getClosestNode((int) p.get(1).getX(), (int) p.get(1).getY()).
+                        removeFromAdjacent(getClosestNode((int) p.get(0).getX(), (int) p.get(0).getY()));
 
                 return;
             }
@@ -539,10 +548,10 @@ public class SuperiorWindow extends JFrame implements ActionListener {
 
 
     /**
-     * Method to remove a node at a mouse click lcoation
+     * Method to remove a node at a mouse click lcoation.
      *
-     * @param x x coordinate of mouse click
-     * @param y y coordinate of mouse click
+     * @param x x coordinate of mouse click.
+     * @param y y coordinate of mouse click.
      */
     public void removeNode(int x, int y) {
        //nodes.remove(getClosestNode(x, y));
@@ -560,12 +569,12 @@ public class SuperiorWindow extends JFrame implements ActionListener {
 
             }
         }
-        for(ArrayList<Point> edge : rmedges) {
+        for (ArrayList<Point> edge : rmedges) {
             edges.remove(edge);
         }
 
         Point toRm = new Point();
-        for(Point p : ContextPoints) {
+        for (Point p : ContextPoints) {
             if (p.getX() == x && p.getY() == y) {
                 rm = true;
                 toRm = p;
@@ -573,7 +582,7 @@ public class SuperiorWindow extends JFrame implements ActionListener {
             }
         }
         ContextPoints.remove(toRm);
-        for(Point p : ChangePoints) {
+        for (Point p : ChangePoints) {
             if (p.getX() == x && p.getY() == y) {
                 rm = true;
                 toRm = p;
@@ -594,10 +603,10 @@ public class SuperiorWindow extends JFrame implements ActionListener {
     }
 
     /**
-     * Method to calibrate the x and y coordination of the image via mouse clicks
+     * Method to calibrate the x and y coordination of the image via mouse clicks.
      *
-     * @param X x location of mouse click
-     * @param Y y location of mouse click
+     * @param X x location of mouse click.
+     * @param Y y location of mouse click.
      */
     public void calibrate(int X, int Y) {
        for (JButton b : btns) {
@@ -607,16 +616,16 @@ public class SuperiorWindow extends JFrame implements ActionListener {
        wayPointBtn.setForeground(Color.BLUE);
        wayPointBtn.setOpaque(true);
 
-       InsetX = X -1;
-       InsetY = Y -1;
+       InsetX = X - 1;
+       InsetY = Y - 1;
     }
 
     /**
-     * Method that saves the map information to a file
+     * Method that saves the map information to a file.
      *
-     * @param nodes corresponding nodes to save
-     * @param filePath file path location at which to save
-     * @param name the name of the file to be saved to
+     * @param nodes corresponding nodes to save.
+     * @param filePath file path location at which to save.
+     * @param name the name of the file to be saved to.
      */
     private void saveData(ArrayList<Node> nodes, String filePath, String name) {
 
@@ -624,15 +633,15 @@ public class SuperiorWindow extends JFrame implements ActionListener {
         try {
             Files.createDirectories(storageDir);
 
-            PrintWriter writer = new PrintWriter("src/main/resources/MapFiles/" +
-                    name+ "/NodeSource.txt", "UTF-8");
+            PrintWriter writer = new PrintWriter("src/main/resources/MapFiles/"
+                    + name + "/NodeSource.txt", "UTF-8");
             writer.println(filePath);
 
-            for(Node node: nodes) {
+            for (Node node: nodes) {
                 writer.println(node.getID() + " " + node.getLocX() + " " + node.getLocY());
-                for (int i =0;i<node.getAdjacent().size();i++) {
+                for (int i = 0; i < node.getAdjacent().size(); i++) {
                     writer.print(node.getAdjacent().get(i).getID() + " ");
-                    writer.print(node.getWeight().get(i)+ " ");
+                    writer.print(node.getWeight().get(i) + " ");
                 }
                 writer.println();
             }
@@ -640,7 +649,7 @@ public class SuperiorWindow extends JFrame implements ActionListener {
             writer.close();
 
 
-        }catch (IOException e) {
+        } catch (IOException e) {
             System.out.println("Fail");
         }
         this.dispose();
