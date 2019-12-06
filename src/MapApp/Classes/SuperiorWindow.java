@@ -17,7 +17,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * A superior version of the GUI for the mapping program. Sleek, stylish, new, what can't it do???
+ */
 public class SuperiorWindow extends JFrame implements ActionListener {
     JButton wayPointBtn = new JButton("Waypoints");
     JButton destinationPointBtn = new JButton("Destination Points");
@@ -62,142 +64,171 @@ public class SuperiorWindow extends JFrame implements ActionListener {
     int weight = 0;
 
     JPanel container;
-    public SuperiorWindow() {
-        container = new JPanel();
-        container.setLayout(new BorderLayout());
+
+    /**
+     * Constructor for the ol' sexy SuperiorWindow class. Gets you all set up with
+     * a SuperiorWindow of your own, as seen on TV.
+   public SuperiorWindow() {
+       container = new JPanel();
+       container.setLayout(new BorderLayout());
 
 
-        /******** Creates, formats and populates list of buttons *******/
-        btnSet = new JPanel();
-        btnSet.setLayout(new GridLayout(9, 1));
-        btnSet.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
-        btnSet.setBackground(Color.orange);
+       /******** Creates, formats and populates list of buttons *******/
+       btnSet = new JPanel();
+       btnSet.setLayout(new GridLayout(9, 1));
+       btnSet.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
+       btnSet.setBackground(Color.orange);
 
-        //currentState.setBorder(BorderFactory.createLineBorder(Color.BLACK, 20));
-        btnSet.add(currentState);
+       //currentState.setBorder(BorderFactory.createLineBorder(Color.BLACK, 20));
+       btnSet.add(currentState);
 
-        for(JButton b : btns) {
-            b.addActionListener(this);
-            //b.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-            btnSet.add(b);
-            b.setEnabled(false);
-        }
+       for(JButton b : btns) {
+           b.addActionListener(this);
+           //b.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+           btnSet.add(b);
+           b.setEnabled(false);
+       }
 
 
         /******** Creates and Adds A new ImagePanel *****/
-        loadFile();
-        imagePanel = paintImage();
-        imagePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
+       loadFile();
+       imagePanel = paintImage();
+       imagePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
 
 
 
-        menu1 = new JMenu("Other Options");
-        menu1.add(Save);
-        Save.addActionListener(this);
-        menu1.add(customWeightitem);
-        menu1.add(getCodeRep);
-        getCodeRep.addActionListener(this);
-        mb.add(menu1);
+       menu1 = new JMenu("Other Options");
+       menu1.add(Save);
+       Save.addActionListener(this);
+       menu1.add(customWeightitem);
+       menu1.add(getCodeRep);
+       getCodeRep.addActionListener(this);
+       mb.add(menu1);
 
 
 
-        /*********** Adds Menus, Panels to JFrame and finalizes frame creation *******/
-        container.add(btnSet, BorderLayout.WEST);
-        container.add(imagePanel);
+       /*********** Adds Menus, Panels to JFrame and finalizes frame creation *******/
+       container.add(btnSet, BorderLayout.WEST);
+       container.add(imagePanel);
 
 
-        this.setJMenuBar(mb);
-        this.add(container);
+       this.setJMenuBar(mb);
+       this.add(container);
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setExtendedState(Frame.MAXIMIZED_BOTH);
+       this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       this.setExtendedState(Frame.MAXIMIZED_BOTH);
 
-        this.setSize(400, 400);
-        this.setVisible(true);
-        this.validate();
-        this.repaint();
+       this.setSize(400, 400);
+       this.setVisible(true);
+       this.validate();
+       this.repaint();
 
-        this.setResizable(false);
+       this.setResizable(false);
 
-        drawOnPanel();
-    }
+       drawOnPanel();
+   }
 
-    public void notifyOfCalibration(){
-        JOptionPane.showMessageDialog(this,
-                "In order to calibrate the Graphmaker, please place the tip of \n" +
-                        "your cursor in the white box at the upper right hand corner of \n" +
-                        "the image and click once before doing any other actions.");
-    }
+    /**
+     * Simple method that notifies the user of the necessity to calibrate the Graphmaker,
+     * as well as how to do so. This is a public method that is called externally so that it does not hamper
+     * the more aesthetic portions of SupWindow creation, as something like, say, title assignment
+     * would not continue until the JOptionPane was closed.
+     */
+   public void notifyOfCalibration(){
+       JOptionPane.showMessageDialog(this,
+               "In order to calibrate the Graphmaker, please place the tip of \n" +
+                       "your cursor in the white box at the upper right hand corner of \n" +
+                       "the image and click once before doing any other actions.");
+   }
 
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
 
-        for (JButton b : btns) {
-            if (actionEvent.getSource() == b) {
-                resetButtonGraphics(btns);
-                setSelected(b);
-                currentState.setText("    " + b.getText());
+       for (JButton b : btns) {
+           if (actionEvent.getSource() == b) {
+               resetButtonGraphics(btns);
+               setSelected(b);
+               currentState.setText("    " + b.getText());
 
-            }
-        }
-        if (actionEvent.getSource() == wayPointBtn) {
-            status = 0;
-        } else if (actionEvent.getSource() == destinationPointBtn) {
-            status = 1;
-        } else if (actionEvent.getSource() == linkPointsBtn) {
-            status = 2;
-        } else if (actionEvent.getSource() == drawPathBtn) {
-            status = 3;
-        } else if (actionEvent.getSource() == erasePathBtn) {
-            status = 4;
-        } else if (actionEvent.getSource() == erasePointBtn) {
-            status = 5;
-        } else if(actionEvent.getSource() == checkID) {
-            status = 6;
-        }else if(actionEvent.getSource() == Save){
-            saveData(nodes, filePath, JOptionPane.showInputDialog("Please enter a name for your save.") );
-        } else if (actionEvent.getSource() == newFloorBtn) {
-            if (flag == true) {
-                this.remove(container);
-                container.remove(imagePanel);
-                imagePanel = paintPathImage();
-                container.add(imagePanel);
-                this.add(container);
-                container.repaint();
-                container.setVisible(true);
-                this.validate();
-                this.repaint();
-                flag = false;
-                newFloorBtn.setText("View Graph");
-            } else {
-                this.remove(container);
-                container.remove(imagePanel);
-                imagePanel = paintImage();
-                container.add(imagePanel);
-                this.add(container);
-                container.repaint();
-                container.setVisible(true);
-                this.validate();
-                this.repaint();
-                flag = true;
-                newFloorBtn.setText("Get Path");
+           }
+       }
+       if (actionEvent.getSource() == wayPointBtn) {
+           status = 0;
+       } else if (actionEvent.getSource() == destinationPointBtn) {
+           status = 1;
+       } else if (actionEvent.getSource() == linkPointsBtn) {
+           status = 2;
+       } else if (actionEvent.getSource() == drawPathBtn) {
+           status = 3;
+       } else if (actionEvent.getSource() == erasePathBtn) {
+           status = 4;
+       } else if (actionEvent.getSource() == erasePointBtn) {
+           status = 5;
+       } else if(actionEvent.getSource() == checkID) {
+           status = 6;
+       }else if(actionEvent.getSource() == Save){
+           saveData(nodes, filePath, JOptionPane.showInputDialog("Please enter a name for your save.") );
+       } else if (actionEvent.getSource() == newFloorBtn) {
+           if (flag == true) {
+               this.remove(container);
+               container.remove(imagePanel);
+               imagePanel = paintPathImage();
+               container.add(imagePanel);
+               this.add(container);
+               container.repaint();
+               container.setVisible(true);
+               this.validate();
+               this.repaint();
+               flag = false;
+               newFloorBtn.setText("View Graph");
+           } else {
+               this.remove(container);
+               container.remove(imagePanel);
+               imagePanel = paintImage();
+               container.add(imagePanel);
+               this.add(container);
+               container.repaint();
+               container.setVisible(true);
+               this.validate();
+               this.repaint();
+               flag = true;
+               newFloorBtn.setText("Get Path");
 
-            }
-        }else if (actionEvent.getSource() == getCodeRep) {
-            JTextArea textarea= new JTextArea(getListPython());
-            textarea.setEditable(true);
-            JOptionPane.showMessageDialog(null, textarea);
-        }
+           }
+       }else if (actionEvent.getSource() == getCodeRep) {
+           String[] values = {"Java", "Python", "6", "12", "18", "24"};
+
+           Object selected = JOptionPane.showInputDialog(null, "Pick the target Language", "Language Selection", JOptionPane.DEFAULT_OPTION, null, values, "0");
+           if ( selected != null ){//null if the user cancels.
+               String selectedString = selected.toString();
+               //do something
+           }else{
+               System.out.println("User cancelled");
+           }
+       }
 
 
     }
+
+    /**
+     * Method to reset the visuals of buttons.
+     *
+     * @param btns The array of buttons to be reset
+     */
     private void resetButtonGraphics(JButton btns[]) {
-        for (JButton b : btns) {
-            b.setForeground(Color.BLACK);
-            b.setOpaque(false);
-        }
+       for (JButton b : btns) {
+           b.setForeground(Color.BLACK);
+           b.setOpaque(false);
+       }
     }
+
+    /**
+     * Sets the visual of a button to a visually unique state to signify that
+     * it is currently selected
+     *
+     * @param btn the specific button to be selected
+     */
     private void setSelected(JButton btn) {
         btn.setBackground(Color.BLACK);
         btn.setForeground(Color.BLUE);
@@ -210,47 +241,29 @@ public class SuperiorWindow extends JFrame implements ActionListener {
                 JOptionPane.showInputDialog("Enter stop point"),  filePath);
         dijkstraProcesser.loadMatrixFromNodes(nodes);
 
-        final List<Integer[]> coordinateList = dijkstraProcesser.shortestPath;
+        List<Integer[]> coordinateList = dijkstraProcesser.shortestPath;
 
 
         JPanel Pane = new JPanel() {
             @Override
             public void paintComponent(Graphics g) {
                 //DisplayPath.Direction d = null;
-                int distance = 0;
                 super.paintComponent(g);
                 Graphics2D gDraw = (Graphics2D) g;
                 gDraw.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                gDraw.setColor(Color.ORANGE);
+                gDraw.setColor(Color.blue);
                 try {
                     BufferedImage image = ImageIO.read(new File(filePath));
                     g.drawImage(image, 0, 0,getWidth(), getHeight(), null);
                     gDraw.setStroke(new BasicStroke(4));
                     for (int i = 0; i < coordinateList.size() - 1; i++) {
-                        int x1 = (int)coordinateList.get(i)[0]+3 - InsetX;
-                        int y1 = coordinateList.get(i)[1]+3 - InsetY;//modification of coordinates to provide accurate location
-                        int x2 = coordinateList.get(i+1)[0]+3 - InsetX;
-                        int y2 = coordinateList.get(i+1)[1]+3 - InsetY;
+                        int x1 = (int)coordinateList.get(i)[0] - InsetX;
+                        int y1 = coordinateList.get(i)[1] - InsetY;//modification of coordinates to provide accurate location
+                        int x2 = coordinateList.get(i+1)[0] - InsetX;
+                        int y2 = coordinateList.get(i+1)[1] - InsetY;
                         gDraw.drawLine(x1, y1, x2, y2);
-                        int finalDif = (int) Math.pow(x1-x2, 2) + (int) Math.pow(y1-y2, 2);
-                        int add = (int)Math.sqrt(finalDif);
-                        distance = distance + add;
 
                     }
-                    currentState.setText("Distance: " + distance + " Pixels.");
-                    gDraw.setColor(Color.BLACK);
-                    for (Point point : ContextPoints) {
-                        gDraw.fillOval(point.x-InsetX, point.y-InsetY, 10, 10);
-                    }
-
-                    for (Point point : DestinationPoints) {
-                        gDraw.fillOval(point.x-InsetX, point.y-InsetY, 10, 10);
-                    }
-
-                    for (Point point : ChangePoints) {
-                        gDraw.fillOval(point.x-InsetX, point.y-InsetY, 10, 10);
-                    }
-
 
                 }catch (IOException e){
                     System.out.print(filePath);
@@ -260,12 +273,54 @@ public class SuperiorWindow extends JFrame implements ActionListener {
         return Pane;
     }
 
+    public JPanel paintPathImage() {
+        DijkstraProcesser dijkstraProcesser = new
+                DijkstraProcesser(JOptionPane.showInputDialog("Enter start point"),
+                JOptionPane.showInputDialog("Enter stop point"),  filePath);
+        dijkstraProcesser.loadMatrixFromNodes(nodes);
+
+        List<Integer[]> coordinateList = dijkstraProcesser.shortestPath;
+
+
+        JPanel Pane = new JPanel() {
+            @Override
+            public void paintComponent(Graphics g) {
+                //DisplayPath.Direction d = null;
+                super.paintComponent(g);
+                Graphics2D gDraw = (Graphics2D) g;
+                gDraw.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                gDraw.setColor(Color.blue);
+                try {
+                    BufferedImage image = ImageIO.read(new File(filePath));
+                    g.drawImage(image, 0, 0,getWidth(), getHeight(), null);
+                    gDraw.setStroke(new BasicStroke(4));
+                    for (int i = 0; i < coordinateList.size() - 1; i++) {
+                        int x1 = (int)coordinateList.get(i)[0] - InsetX;
+                        int y1 = coordinateList.get(i)[1] - InsetY;//modification of coordinates to provide accurate location
+                        int x2 = coordinateList.get(i+1)[0] - InsetX;
+                        int y2 = coordinateList.get(i+1)[1] - InsetY;
+                        gDraw.drawLine(x1, y1, x2, y2);
+
+                    }
+
+                }catch (IOException e){
+                    System.out.print(filePath);
+                }
+            }
+        };
+        return Pane;
+    }
+
+    /**
+     * Method to create an image that combines the image of the map and the present nodes and edges
+     *
+     * @return a newly 'drawn upon' JPanel combining the graphics of nodes/edges and the map itself
+     */
     public JPanel paintImage() {
 
         JPanel Pane = new JPanel() {
             @Override
             public void paintComponent(Graphics g) {
-
                 super.paintComponent(g);
                 Graphics2D gDraw = (Graphics2D) g;
                 gDraw.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -291,11 +346,7 @@ public class SuperiorWindow extends JFrame implements ActionListener {
                         gDraw.drawLine(x1 - InsetX+3, y1- InsetY+3,
                                 x2- InsetX+3, y2- InsetY+3);
 
-
-
                     }
-
-
 
                     gDraw.setColor(Color.blue);
                     for (Point point : ContextPoints) {
@@ -311,7 +362,7 @@ public class SuperiorWindow extends JFrame implements ActionListener {
                     }
 
 //
-                }catch (IOException e){
+           }catch (IOException e){
                     System.out.print(filePath);
                 }
             }
@@ -319,10 +370,13 @@ public class SuperiorWindow extends JFrame implements ActionListener {
         return Pane;
     }
 
+    /**
+     * Method that performs the graphic operations requested by the user (adding nodes of various types and edges)
+     */
     public void drawOnPanel() {
         //filePath = filepath1;
-        final ArrayList<Point> pair = new ArrayList<>();
-        final ArrayList<Node> nodePair = new ArrayList<>();
+        ArrayList<Point> pair = new ArrayList<>();
+        ArrayList<Node> nodePair = new ArrayList<>();
         setBackground(Color.WHITE);
 
         addMouseListener(new MouseAdapter() {
@@ -414,6 +468,10 @@ public class SuperiorWindow extends JFrame implements ActionListener {
         });
     }
 
+    /**
+     * Method to query for a file, create a string out of the filepath to the chosen file,
+     * and then modifies the filePath member to this string
+     */
     public void loadFile() {
         FileDialog dialog = new FileDialog(this, "Select File to Open");
         dialog.setMode(FileDialog.LOAD);
@@ -424,6 +482,13 @@ public class SuperiorWindow extends JFrame implements ActionListener {
         filePath = directory + file;
     }
 
+    /**
+     * Method to grab and return the node closest to the given (x, y) point
+     *
+     * @param x the x-coordinate to search from
+     * @param y the y-coordiante to search from
+     * @return the node closest to (x, y).
+     */
     private Node getClosestNode(int x, int y) {
         for (Node node : nodes)
             if (Math.abs(x - node.getLocX()) < 10 && Math.abs(y - node.getLocY()) < 10)
@@ -431,34 +496,49 @@ public class SuperiorWindow extends JFrame implements ActionListener {
         return null;
     }
 
+    /**
+     * Method to calculate the pythagorean distance between two nodes
+     *
+     * @param nodePair the two nodes for which distance will be found
+     * @return the pythagorean distance between the pair of nodes
+     */
     private int getWeight(ArrayList<Node> nodePair) {
-        int weight = -2;
-        if(!customWeight) {
-            int xDif = Math.abs(nodePair.get(0).getLocX() - nodePair.get(1).getLocX());
-            int yDif = Math.abs(nodePair.get(0).getLocY() - nodePair.get(1).getLocY());
-            int finalDif = (int) Math.pow(xDif, 2) + (int) Math.pow(yDif, 2);
+       int weight = -2;
+       if(!customWeight) {
+           int xDif = Math.abs(nodePair.get(0).getLocX() - nodePair.get(1).getLocX());
+           int yDif = Math.abs(nodePair.get(0).getLocY() - nodePair.get(1).getLocY());
+           int finalDif = (int) Math.pow(xDif, 2) + (int) Math.pow(yDif, 2);
 
-            weight = (int) Math.sqrt((double) finalDif);
-        } else {
-            try {
-                weight = Integer.parseInt(JOptionPane.showInputDialog("Please enter a line weight"));
-            }catch (Exception e) {
-                while (weight == -2) {
-                    weight = Integer.parseInt(JOptionPane.showInputDialog("Please enter a valid line weight"));
-                }
-            }
-        }
-        return weight;
+           weight = (int) Math.sqrt((double) finalDif);
+       } else {
+           try {
+               weight = Integer.parseInt(JOptionPane.showInputDialog("Please enter a line weight"));
+           }catch (Exception e) {
+               while (weight == -2) {
+                   weight = Integer.parseInt(JOptionPane.showInputDialog("Please enter a valid line weight"));
+               }
+           }
+       }
+       return weight;
 
     }
+
+    /**
+     * Method to compare two points and return whether they exist in the same space or not
+     *
+     * @param p1 the first point to compare
+     * @param p2 the second point to compare to
+     * @return true if the points possess the same coordinates, false otherwise
+     */
     private boolean comparePoints(Point p1, Point p2) {
-        if (p1.equals(p2) ){
-            return true;
+       if (p1.equals(p2) ){
+           return true;
         }
-        return false;
+       return false;
     }
+
     private boolean comparePairs(ArrayList<Point> p1, ArrayList<Point> p2) {
-        int match = 0;
+       int match = 0;
         for(Point p : p1) {
             for (Point o : p2) {
                 if (comparePoints(o, p)) {
@@ -472,37 +552,49 @@ public class SuperiorWindow extends JFrame implements ActionListener {
         return false;
     }
 
+    /**
+     * Method to remove an edge between two points
+     *
+     * @param pair a pair containing the two points between which the edge will be removed
+     */
     public void removeEdge(ArrayList<Point> pair) {
 
         Node rmNode;
         for (ArrayList<Point> p : edges) {
-            if(comparePairs(p, pair)){
-                edges.remove(p);
-                getClosestNode((int)p.get(0).getX(), (int)p.get(0).getY()).
-                        removeFromAdjacent(getClosestNode((int)p.get(1).getX(), (int)p.get(1).getY()));
+           if(comparePairs(p, pair)){
+               edges.remove(p);
+               getClosestNode((int)p.get(0).getX(), (int)p.get(0).getY()).
+                       removeFromAdjacent(getClosestNode((int)p.get(1).getX(), (int)p.get(1).getY()));
 
+               getClosestNode((int)p.get(1).getX(), (int)p.get(1).getY()).
+                       removeFromAdjacent(getClosestNode((int)p.get(0).getX(), (int)p.get(0).getY()));
+
+               return;
+           }
+        }
                 getClosestNode((int)p.get(1).getX(), (int)p.get(1).getY()).
                         removeFromAdjacent(getClosestNode((int)p.get(0).getX(), (int)p.get(0).getY()));
 
                 return;
             }
         }
-
-
-
-
-
-
     }
 
+
+    /**
+     * Method to remove a node at a mouse click lcoation
+     *
+     * @param x x coordinate of mouse click
+     * @param y y coordinate of mouse click
+     */
     public void removeNode(int x, int y) {
-        //nodes.remove(getClosestNode(x, y));
-        System.out.println("Tried to remove : " + getClosestNode(x, y).getID());
-        for (Node n: nodes) {
-            n.removeFromAdjacent(getClosestNode(x, y));
-        }
-        ArrayList<ArrayList<Point>> rmedges = new ArrayList<>();
-        boolean rm = false;
+       //nodes.remove(getClosestNode(x, y));
+       System.out.println("Tried to remove : " + getClosestNode(x, y).getID());
+       for (Node n: nodes) {
+           n.removeFromAdjacent(getClosestNode(x, y));
+       }
+       ArrayList<ArrayList<Point>> rmedges = new ArrayList<>();
+       boolean rm = false;
         for (ArrayList<Point> edge: edges) {
             for (Point p1 : edge) {
                 if (p1.getX() == x && p1.getY() == y) {
@@ -544,20 +636,33 @@ public class SuperiorWindow extends JFrame implements ActionListener {
             DestinationPoints.remove(toRm);
     }
 
+    /**
+     * Method to calibrate the x and y coordination of the image via mouse clicks
+     *
+     * @param X x location of mouse click
+     * @param Y y location of mouse click
+     */
     public void calibrate(int X, int Y) {
-        for (JButton b : btns) {
-            b.setEnabled(true);
-        }
-        wayPointBtn.setBackground(Color.BLACK);
-        wayPointBtn.setForeground(Color.BLUE);
-        wayPointBtn.setOpaque(true);
+       for (JButton b : btns) {
+           b.setEnabled(true);
+       }
+       wayPointBtn.setBackground(Color.BLACK);
+       wayPointBtn.setForeground(Color.BLUE);
+       wayPointBtn.setOpaque(true);
 
-        InsetX = X -1;
-        InsetY = Y -1;
+       InsetX = X -1;
+       InsetY = Y -1;
 
 
     }
 
+    /**
+     * Method that saves the map information to a file
+     *
+     * @param nodes corresponding nodes to save
+     * @param filePath file path location at which to save
+     * @param name the name of the file to be saved to
+     */
     private void saveData(ArrayList<Node> nodes, String filePath, String name) {
 
         Path storageDir = Paths.get("src/main/resources/MapFiles/" + name);
@@ -586,27 +691,5 @@ public class SuperiorWindow extends JFrame implements ActionListener {
         this.dispose();
 
 
-    }
-
-    private String getListPython() {
-        String list = "{";
-        for (int i = 0; i < nodes.size(); i++) {
-            if (i != 0) {
-                list = list + ",";
-            }
-            list = list + " \"" + nodes.get(i).getID() + "\" : {";
-
-            for (int j = 0; j < nodes.get(0).getAdjacent().size(); j++) {
-                if (j !=0) {
-                    list= list + ",";
-                }
-                list = list + "\"" + nodes.get(i).getAdjacent().get(j).getID() + "\" :"
-                        + nodes.get(i).getWeight().get(j);
-            }
-            list = list + "} \n";
-
-        }
-        list = list + "}";
-        return list;
     }
 }

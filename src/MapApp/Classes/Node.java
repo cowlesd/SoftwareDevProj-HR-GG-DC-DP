@@ -35,24 +35,50 @@ public class Node implements Comparable<Node> {
      */
     private String nodeID;
 
+    /**
+     * Getter for the previous node
+     *
+     * @return the previous node of 'this' node
+     */
     public Node getPrevious() {
         return previous;
     }
 
+    /**
+     * Setter or the previous node of 'this' node
+     *
+     * @param previous the new previous node to 'this' node
+     */
     public void setPrevious(Node previous) {
         this.previous = previous;
     }
 
+    /**
+     * The node previous to 'this' node
+     */
     private Node previous;
 
+    /**
+     *
+     *
+     * @return
+     */
     public double getMinDistance() {
         return minDistance;
     }
 
+    /**
+     * Setter for the minDistance of 'this' node
+     *
+     * @param minDistance the new value of which to set minDistance for 'this' node
+     */
     public void setMinDistance(double minDistance) {
         this.minDistance = minDistance;
     }
 
+    /**
+     *
+     */
     private double minDistance = Double.POSITIVE_INFINITY;
 
     /**
