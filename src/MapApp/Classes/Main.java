@@ -14,6 +14,7 @@ public class Main {
 
         GUI gui = new GUI();
         gui.setVisible(true);
+        gui.setLocationRelativeTo(null);
 
 //        SuperiorWindow neew = new SuperiorWindow();
 //        neew.setVisible(true);

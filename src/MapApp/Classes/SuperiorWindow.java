@@ -119,11 +119,14 @@ public class SuperiorWindow extends JFrame implements ActionListener {
 
        this.setResizable(false);
 
+       drawOnPanel();
+   }
+
+   public void notifyOfCalibration(){
        JOptionPane.showMessageDialog(this,
                "In order to calibrate the Graphmaker, please place the tip of \n" +
                        "your cursor in the white box at the upper right hand corner of \n" +
                        "the image and click once before doing any other actions.");
-       drawOnPanel();
    }
 
 

@@ -12,7 +12,7 @@ import java.io.*;
 /**
  *
  * Special JFrame child class used to display main mapping application and offer choice of options
- * including
+ * including the creation of a new map, and finding a path on a map. Also shows a list of a
  */
 public class GUI extends JFrame {
     private JPanel topPanel;
@@ -35,7 +35,7 @@ public class GUI extends JFrame {
 
         table = new JTable(modl);
 
-        modl.addColumn("Col1");
+        modl.addColumn("Available Maps");
         fillTable();
 
 
@@ -125,8 +125,10 @@ public class GUI extends JFrame {
         System.out.println(modl.getRowCount());
         modl.setRowCount(0);
 
-        for (int i = 0; i < files.length; i++)
+        for (int i = 0; i < files.length; i++) {
             modl.addRow(new Object[]{files[i].toString().substring(28)});
+            //these objects need to be uneditable
+        }
 
     }
     public void displayfile(){
@@ -143,7 +145,9 @@ public class GUI extends JFrame {
 //                "connection node . Press s to submit");
 //        DrawPanel.runProg(directory + file);
         SuperiorWindow neew = new SuperiorWindow();
+        neew.setTitle("Navigatr MapCreatr");
         neew.setVisible(true);
+        neew.notifyOfCalibration();
     }
 
 
