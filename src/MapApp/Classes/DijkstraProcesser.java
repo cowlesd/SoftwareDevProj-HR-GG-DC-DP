@@ -86,8 +86,7 @@ public class DijkstraProcesser {
         for (Node n : newList) {
             nodeList.add(n);
         }
-//        startPoint = start;
-//        endPoint = end;
+
         numVertices = nodeList.size();
         loadArray();
         markStartEnd();
@@ -292,11 +291,20 @@ public class DijkstraProcesser {
      */
     public List<Integer[]> getShortestPathTo(Node target)
     {
-        for (Node vertex = target; vertex != null; vertex = vertex.getPrevious())
+        for (Node vertex = target; vertex != null; vertex = vertex.getPrevious()) {
             shortestPath.add(new Integer[]{new Integer(vertex.getLocX()), new Integer(vertex.getLocY())});
+            shortestPathNodes.add(vertex);
+        }
 
         Collections.reverse(shortestPath);
         return shortestPath;
+    }
+
+    public ArrayList<Node> getNodePath() {
+        for (Node n : shortestPathNodes)  {
+            System.out.println(n.getID());
+        }
+        return shortestPathNodes;
     }
 }
 
