@@ -9,29 +9,32 @@ import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.io.File;
 import java.io.IOException;
-import java.net.NoRouteToHostException;
 import java.util.ArrayList;
 
 /**
  *Class to display the path (shortest) after it is found. Child of JPanel.
  */
 public class DisplayPath extends JPanel {
-    enum Direction{
+
+    /**
+     * enum representing cardinal direction, being NORTH, SOUTH, EAST, or WEST.
+     */
+    enum Direction {
         NORTH, SOUTH, EAST, WEST;
     }
     /**
-     * Address of the file to be used/drawn upon
+     * Address of the file to be used/drawn upon.
      */
-    private static String filePath="";
+    private static String filePath = "";
     /**
-     * Coordinates between which to operate on / draw edges
+     * Coordinates between which to operate on / draw edges.
      */
     private ArrayList<Integer[]> coordinateList = new ArrayList<>();
 
     /**
      * Class to actually.. you know... draw the panel.
      *
-     * @param filepath1 the file path of the file to 'draw'
+     * @param filepath1 the file path of the file to 'draw'.
      *
      */
     //@Override
@@ -43,10 +46,11 @@ public class DisplayPath extends JPanel {
 
     int Xmod = 0;
     int Ymod = 0;
+
     /**
-     *Method to draw edges between nodes (as lines)
+     *Method to draw edges between nodes (as lines).
      *
-     * @param g graphic object representing the desired states being drawn
+     * @param g graphic object representing the desired states being drawn.
      */
     @Override
     public void paintComponent(Graphics g) {
@@ -57,92 +61,94 @@ public class DisplayPath extends JPanel {
         gDraw.setColor(Color.blue);
         try {
             BufferedImage image = ImageIO.read(new File(filePath));
-            g.drawImage(image, 0, 0,getWidth(), getHeight(), null);
+            g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
             gDraw.setStroke(new BasicStroke(4));
             for (int i = 0; i < coordinateList.size() - 1; i++) {
-                int x1 = (int)coordinateList.get(i)[0] - 40 ;
-                int y1 = coordinateList.get(i)[1] - 30 + Ymod;//modification of coordinates to provide accurate location
-                int x2 = coordinateList.get(i+1)[0] - 40;
-                int y2 = coordinateList.get(i+1)[1] -30 + Ymod;
+                int x1 = (int) coordinateList.get(i)[0] - 40;
+                int y1 = coordinateList.get(i)[1] - 30 + Ymod; //modification of coordinates to provide accurate location
+                int x2 = coordinateList.get(i + 1)[0] - 40;
+                int y2 = coordinateList.get(i + 1)[1] - 30 + Ymod;
                 gDraw.drawLine(x1, y1, x2, y2);
 
-                if(d == null){
-                    if(x2 - x1 > 20){
+                if (d == null) {
+                    if (x2 - x1 > 20) {
                         d = Direction.EAST;
                     }
-                    else if(x1 - x2 > 20){
+                    else if (x1 - x2 > 20) {
                         d = Direction.WEST;
                     }
-                    else if(y2 - y1 > 20){
+                    else if (y2 - y1 > 20) {
                         d = Direction.SOUTH;
                     }
-                    else if(y1 - y2 > 20){
+                    else if (y1 - y2 > 20) {
                         d = Direction.NORTH;
                     }
                     System.out.println("Begin walking " + d);
                 }
-                else{
-                    switch (d){
+                else {
+                    switch (d) {
                         case NORTH:
-                            if(x2 - x1 > 20){
+                            if (x2 - x1 > 20) {
                                 System.out.println("Turn right.");
                                 d = Direction.EAST;
-                            } else if(x1 - x2 > 20){
+                            } else if (x1 - x2 > 20) {
                                 System.out.println("Turn left.");
                                 d = Direction.WEST;
-                            } else if(y1 - y2 > 20){
+                            } else if (y1 - y2 > 20) {
                                 System.out.println("Continue north.");
                             }
                             break;
                         case SOUTH:
-                            if(x1 - x2 > 20){
+                            if (x1 - x2 > 20) {
                                 System.out.println("Turn right");
                                 d = Direction.WEST;
-                            } else if(x2 - x1 > 20){
+                            } else if (x2 - x1 > 20) {
                                 System.out.println("Turn left.");
                                 d = Direction.EAST;
-                            } else if(y2 - y1 > 20){
+                            } else if (y2 - y1 > 20) {
                                 System.out.println("Continue south.");
                             }
                             break;
                         case EAST:
-                            if(y2 - y1 > 20){
+                            if (y2 - y1 > 20) {
                                 System.out.println("Turn right.");
                                 d = Direction.SOUTH;
-                            } else if(y1 - y2 > 20){
+                            } else if (y1 - y2 > 20) {
                                 System.out.println("Turn left.");
                                 d = Direction.NORTH;
-                            } else if(x2 - x1 > 20){
+                            } else if (x2 - x1 > 20) {
                                 System.out.println("Continue east.");
                             }
                             break;
                         case WEST:
-                            if(y1 - y2 > 20){
+                            if (y1 - y2 > 20) {
                                 System.out.println("Turn right.");
                                 d = Direction.NORTH;
-                            } else if(y2 - y1 > 20){
+                            } else if (y2 - y1 > 20) {
                                 System.out.println("Turn left.");
                                 d = Direction.SOUTH;
-                            } else if(x1 - x2 > 20){
+                            } else if (x1 - x2 > 20) {
                                 System.out.println("Continue west.");
                             }
                     }
                 }
-                if(i == coordinateList.size() - 2){
+                if (i == coordinateList.size() - 2) {
                     System.out.println("You have arrived at your destination.");
                 }
             }
 
-        }catch (IOException e){
+        } catch (IOException e) {
             System.out.print(filePath);
         }
     }
 
     /**
-     *Method to run the DisplayPath subroutine
+     *Method to run the DisplayPath subroutine.
      *
-     * @param filePath1 Contains the filepath of the map to be used
-     * @param coordinates ArrayList of coordinates
+     * @param filePath1 Contains the filepath of the map to be used.
+     * @param coordinates ArrayList of coordinates.
+     * @param insetX x coordinate adjustment
+     * @param insetY y coordiante adjustment
      */
     public void runProg(String filePath1, ArrayList<Integer[]> coordinates, int insetX, int insetY) {
         Xmod = insetX;
