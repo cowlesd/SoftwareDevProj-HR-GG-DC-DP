@@ -81,6 +81,18 @@ public class DijkstraProcesser {
      *
      * @throws IOException
      */
+    public void loadMatrixFromNodes(ArrayList<Node> newList) {
+        nodeList.clear();
+        for (Node n : newList) {
+            nodeList.add(n);
+        }
+//        startPoint = start;
+//        endPoint = end;
+        numVertices = nodeList.size();
+        loadArray();
+        markStartEnd();
+        dijkstra(graph, startIndex);
+    }
     public void loadAdjacencyMatrix() throws IOException {
         File file = new File(mapPath);
         BufferedReader br = null;
@@ -265,8 +277,8 @@ public class DijkstraProcesser {
                 endNode = nodeList.get(i);
         }
         getShortestPathTo(endNode);
-        DisplayPath display = new DisplayPath();
-        display.runProg(mapPath, shortestPath);
+        //DisplayPath display = new DisplayPath();
+        //display.runProg(mapPath, shortestPath, SuperiorWindow.getInsetX(), SuperiorWindow.getInsetX());
     }
 
     /**

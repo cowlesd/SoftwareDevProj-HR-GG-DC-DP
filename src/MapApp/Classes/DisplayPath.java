@@ -41,6 +41,8 @@ public class DisplayPath extends JPanel {
         repaint();
     }
 
+    int Xmod = 0;
+    int Ymod = 0;
     /**
      *Method to draw edges between nodes (as lines)
      *
@@ -58,10 +60,10 @@ public class DisplayPath extends JPanel {
             g.drawImage(image, 0, 0,getWidth(), getHeight(), null);
             gDraw.setStroke(new BasicStroke(4));
             for (int i = 0; i < coordinateList.size() - 1; i++) {
-                int x1 = (int)coordinateList.get(i)[0];
-                int y1 = coordinateList.get(i)[1] -3;//modification of coordinates to provide accurate location
-                int x2 = coordinateList.get(i+1)[0];
-                int y2 = coordinateList.get(i+1)[1] -3;
+                int x1 = (int)coordinateList.get(i)[0] - 40 ;
+                int y1 = coordinateList.get(i)[1] - 30 + Ymod;//modification of coordinates to provide accurate location
+                int x2 = coordinateList.get(i+1)[0] - 40;
+                int y2 = coordinateList.get(i+1)[1] -30 + Ymod;
                 gDraw.drawLine(x1, y1, x2, y2);
 
                 if(d == null){
@@ -142,7 +144,9 @@ public class DisplayPath extends JPanel {
      * @param filePath1 Contains the filepath of the map to be used
      * @param coordinates ArrayList of coordinates
      */
-    public void runProg(String filePath1, ArrayList<Integer[]> coordinates) {
+    public void runProg(String filePath1, ArrayList<Integer[]> coordinates, int insetX, int insetY) {
+        Xmod = insetX;
+        Ymod = insetY;
         filePath = filePath1;
         coordinateList = coordinates;
         JFrame frame = new JFrame();

@@ -102,6 +102,25 @@ public class Node implements Comparable<Node> {
         adjacent.add(node);
         weight.add(newWeight);
     }
+    public void removeFromAdjacent(Node node) {
+        Node forRm = null;
+        int rmNum = -1;
+        int counter = 0;
+        for (Node n : adjacent) {
+            counter++;
+            if (n.getID() == node.getID()) {
+                forRm = n;
+                rmNum = counter-1;
+            }
+        }
+        if (rmNum != -1 && forRm != null) {
+            System.out.println("removed adjacent");
+            //adjacent.remove(forRm);
+            adjacent.remove(rmNum);
+            weight.remove(rmNum);
+        }
+    }
+
 
     /**
      * Getter for the x-coordinate of 'this' node

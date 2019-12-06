@@ -68,8 +68,6 @@ public class SuperiorWindow extends JFrame implements ActionListener {
     /**
      * Constructor for the ol' sexy SuperiorWindow class. Gets you all set up with
      * a SuperiorWindow of your own, as seen on TV.
-     */
-
    public SuperiorWindow() {
        container = new JPanel();
        container.setLayout(new BorderLayout());
@@ -237,6 +235,43 @@ public class SuperiorWindow extends JFrame implements ActionListener {
         btn.setOpaque(true);
     }
 
+    public JPanel paintPathImage() {
+        DijkstraProcesser dijkstraProcesser = new
+                DijkstraProcesser(JOptionPane.showInputDialog("Enter start point"),
+                JOptionPane.showInputDialog("Enter stop point"),  filePath);
+        dijkstraProcesser.loadMatrixFromNodes(nodes);
+
+        List<Integer[]> coordinateList = dijkstraProcesser.shortestPath;
+
+
+        JPanel Pane = new JPanel() {
+            @Override
+            public void paintComponent(Graphics g) {
+                //DisplayPath.Direction d = null;
+                super.paintComponent(g);
+                Graphics2D gDraw = (Graphics2D) g;
+                gDraw.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                gDraw.setColor(Color.blue);
+                try {
+                    BufferedImage image = ImageIO.read(new File(filePath));
+                    g.drawImage(image, 0, 0,getWidth(), getHeight(), null);
+                    gDraw.setStroke(new BasicStroke(4));
+                    for (int i = 0; i < coordinateList.size() - 1; i++) {
+                        int x1 = (int)coordinateList.get(i)[0] - InsetX;
+                        int y1 = coordinateList.get(i)[1] - InsetY;//modification of coordinates to provide accurate location
+                        int x2 = coordinateList.get(i+1)[0] - InsetX;
+                        int y2 = coordinateList.get(i+1)[1] - InsetY;
+                        gDraw.drawLine(x1, y1, x2, y2);
+
+                    }
+
+                }catch (IOException e){
+                    System.out.print(filePath);
+                }
+            }
+        };
+        return Pane;
+    }
 
     public JPanel paintPathImage() {
         DijkstraProcesser dijkstraProcesser = new
@@ -497,14 +532,13 @@ public class SuperiorWindow extends JFrame implements ActionListener {
      */
     private boolean comparePoints(Point p1, Point p2) {
        if (p1.equals(p2) ){
-
            return true;
         }
        return false;
     }
 
     private boolean comparePairs(ArrayList<Point> p1, ArrayList<Point> p2) {
-        int match = 0;
+       int match = 0;
         for(Point p : p1) {
             for (Point o : p2) {
                 if (comparePoints(o, p)) {
@@ -527,11 +561,17 @@ public class SuperiorWindow extends JFrame implements ActionListener {
 
         Node rmNode;
         for (ArrayList<Point> p : edges) {
-            if(comparePairs(p, pair)){
-                edges.remove(p);
-                getClosestNode((int)p.get(0).getX(), (int)p.get(0).getY()).
-                        removeFromAdjacent(getClosestNode((int)p.get(1).getX(), (int)p.get(1).getY()));
+           if(comparePairs(p, pair)){
+               edges.remove(p);
+               getClosestNode((int)p.get(0).getX(), (int)p.get(0).getY()).
+                       removeFromAdjacent(getClosestNode((int)p.get(1).getX(), (int)p.get(1).getY()));
 
+               getClosestNode((int)p.get(1).getX(), (int)p.get(1).getY()).
+                       removeFromAdjacent(getClosestNode((int)p.get(0).getX(), (int)p.get(0).getY()));
+
+               return;
+           }
+        }
                 getClosestNode((int)p.get(1).getX(), (int)p.get(1).getY()).
                         removeFromAdjacent(getClosestNode((int)p.get(0).getX(), (int)p.get(0).getY()));
 

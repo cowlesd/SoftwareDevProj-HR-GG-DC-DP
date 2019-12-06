@@ -253,7 +253,8 @@ public class DrawPanel extends JPanel  {
      * @param filePath Address to save to (in NodeSource file)
      * @param name name of original map file
      */
-    private static void saveData(ArrayList<Node> nodes, String filePath, String name) {
+    private static void saveData(ArrayList<Node> nodes, String filePath,
+                                 String name) {
 
         Path storageDir = Paths.get("src/main/resources/MapFiles/" + name);
         try {
