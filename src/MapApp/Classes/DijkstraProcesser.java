@@ -6,62 +6,62 @@ import java.util.*;
 import java.util.List;
 
 /**
- * Calculator for the shortest path
+ * Calculator for the shortest path.
  */
 public class DijkstraProcesser {
     /**
-     * String representing the file path for the map image
+     * String representing the file path for the map image.
      */
     String mapPath;
 
     /**
-     * String respresentation of the starting node
+     * String respresentation of the starting node.
      */
     String startPoint;
 
     /**
-     * int representation of the starting node
+     * int representation of the starting node.
      */
     int startIndex;
 
     /**
-     * String representation of the ending node
+     * String representation of the ending node.
      */
     String endPoint;
 
     /**
-     * int representation of the ending node
+     * int representation of the ending node.
      */
     int endIndex;
 
     /**
-     * Total number of vertices on the map
+     * Total number of vertices on the map.
      */
     int numVertices;
 
     /**
-     * Arraylist of all nodes
+     * Arraylist of all nodes.
      */
     ArrayList<Node> nodeList;
 
     /**
-     * Arraylist containing final path through nodes
+     * Arraylist containing final path through nodes.
      */
     ArrayList<Node> shortestPathNodes;
 
     /**
-     * Representation of final path as coordinates
+     * Representation of final path as coordinates.
      */
     ArrayList<Integer[]> shortestPath;
 
     /**
-     * Representation of graph as ints
+     * Representation of graph as ints.
      */
     int graph[][];
 
 
     /**
-     * Default constructor for DijkstraProcessor class
+     * Default constructor for DijkstraProcessor class.
      *
      * @param startPoint the starting node
      * @param endPoint   the ending node
@@ -77,8 +77,9 @@ public class DijkstraProcesser {
     }
 
     /**
-     * Fills nodes ArrayList with data
+     * Fills nodes ArrayList with data.
      *
+     * @param newList the new list to be loaded as the nodeList
      * @throws IOException
      */
     public void loadMatrixFromNodes(ArrayList<Node> newList) {
@@ -93,6 +94,12 @@ public class DijkstraProcesser {
         markStartEnd();
         dijkstra(graph, startIndex);
     }
+
+    /**
+     * Loads in an adjacency matrix.
+     *
+     * @throws IOException
+     */
     public void loadAdjacencyMatrix() throws IOException {
         File file = new File(mapPath);
         BufferedReader br = null;
@@ -154,7 +161,7 @@ public class DijkstraProcesser {
 
                 for (int i = 0; i < nodeList.size(); i++) {
                     if (nodeList.get(i).getID().equals(adjName)) {
-                        if(hasNode)
+                        if (hasNode)
                             nodeList.get(currentIndex).addAdjacent(nodeList.get(i), adjWeight);
                         else
                             nodeList.get(currentIndex).addAdjacent(nodeList.get(nodeList.size() - 1), adjWeight);
@@ -177,7 +184,7 @@ public class DijkstraProcesser {
     }
 
     /**
-     * Loads the arrayList into an easy-to-manage format
+     * Loads the arrayList into an easy-to-manage format.
      */
     public void loadArray() {
         graph = new int[numVertices][numVertices];
@@ -195,7 +202,7 @@ public class DijkstraProcesser {
     }
 
     /**
-     * Marks the start and end points, given the string representation
+     * Marks the start and end points, given the string representation.
      */
     public void markStartEnd() {
         for (int i = 0; i < numVertices; i++) {
@@ -238,10 +245,10 @@ public class DijkstraProcesser {
 //    }
 
     /**
-     * The dijkstra algorithm, which finds the shortest path through all points. Terminates at the end point
+     * The dijkstra algorithm, which finds the shortest path through all points. Terminates at the end point.
      *
-     * @param graph nodes to search
-     * @param source   Index of the starting node
+     * @param graph nodes to search.
+     * @param source   Index of the starting node.
      */
     void dijkstra(int graph[][], int source) {
 
@@ -255,7 +262,7 @@ public class DijkstraProcesser {
             // Visit each node connected to u
             for (Node v : u.adjacent) {
                 int i = 0;
-                while((i < v.adjacent.size() - 1) && v.getAdjacent(i) != u){
+                while ((i < v.adjacent.size() - 1) && v.getAdjacent(i) != u) {
                     i++;
                 }
                 double weight = v.getWeight(i);
@@ -272,8 +279,8 @@ public class DijkstraProcesser {
 
         int i;
         Node endNode = nodeList.get(0);
-        for(i = 0; i < nodeList.size(); i++){
-            if(nodeList.get(i).getID().equals(endPoint))
+        for (i = 0; i < nodeList.size(); i++) {
+            if (nodeList.get(i).getID().equals(endPoint))
                 endNode = nodeList.get(i);
         }
         getShortestPathTo(endNode);
@@ -283,15 +290,14 @@ public class DijkstraProcesser {
 
     /**
      * Method to explicitly find and return a list of integer pairs representing the coordinates of nodes
-     * to be traversed
+     * to be traversed.
      *
-     * @param target the node to which the returned path will lead
+     * @param target the node to which the returned path will lead.
      *
      * @return a List containing the shortest path to the target node in terms of coordinates represented
-     * by pairs of integers
+     * by pairs of integers.
      */
-    public List<Integer[]> getShortestPathTo(Node target)
-    {
+    public List<Integer[]> getShortestPathTo(Node target) {
         for (Node vertex = target; vertex != null; vertex = vertex.getPrevious())
             shortestPath.add(new Integer[]{new Integer(vertex.getLocX()), new Integer(vertex.getLocY())});
 

@@ -68,6 +68,7 @@ public class SuperiorWindow extends JFrame implements ActionListener {
     /**
      * Constructor for the ol' sexy SuperiorWindow class. Gets you all set up with
      * a SuperiorWindow of your own, as seen on TV.
+     * **/
    public SuperiorWindow() {
        container = new JPanel();
        container.setLayout(new BorderLayout());
@@ -273,44 +274,6 @@ public class SuperiorWindow extends JFrame implements ActionListener {
         return Pane;
     }
 
-    public JPanel paintPathImage() {
-        DijkstraProcesser dijkstraProcesser = new
-                DijkstraProcesser(JOptionPane.showInputDialog("Enter start point"),
-                JOptionPane.showInputDialog("Enter stop point"),  filePath);
-        dijkstraProcesser.loadMatrixFromNodes(nodes);
-
-        List<Integer[]> coordinateList = dijkstraProcesser.shortestPath;
-
-
-        JPanel Pane = new JPanel() {
-            @Override
-            public void paintComponent(Graphics g) {
-                //DisplayPath.Direction d = null;
-                super.paintComponent(g);
-                Graphics2D gDraw = (Graphics2D) g;
-                gDraw.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                gDraw.setColor(Color.blue);
-                try {
-                    BufferedImage image = ImageIO.read(new File(filePath));
-                    g.drawImage(image, 0, 0,getWidth(), getHeight(), null);
-                    gDraw.setStroke(new BasicStroke(4));
-                    for (int i = 0; i < coordinateList.size() - 1; i++) {
-                        int x1 = (int)coordinateList.get(i)[0] - InsetX;
-                        int y1 = coordinateList.get(i)[1] - InsetY;//modification of coordinates to provide accurate location
-                        int x2 = coordinateList.get(i+1)[0] - InsetX;
-                        int y2 = coordinateList.get(i+1)[1] - InsetY;
-                        gDraw.drawLine(x1, y1, x2, y2);
-
-                    }
-
-                }catch (IOException e){
-                    System.out.print(filePath);
-                }
-            }
-        };
-        return Pane;
-    }
-
     /**
      * Method to create an image that combines the image of the map and the present nodes and edges
      *
@@ -360,8 +323,6 @@ public class SuperiorWindow extends JFrame implements ActionListener {
                     for (Point point : ChangePoints) {
                         gDraw.fillOval(point.x-InsetX, point.y-InsetY, 10, 10);
                     }
-
-//
            }catch (IOException e){
                     System.out.print(filePath);
                 }
@@ -561,17 +522,11 @@ public class SuperiorWindow extends JFrame implements ActionListener {
 
         Node rmNode;
         for (ArrayList<Point> p : edges) {
-           if(comparePairs(p, pair)){
-               edges.remove(p);
-               getClosestNode((int)p.get(0).getX(), (int)p.get(0).getY()).
-                       removeFromAdjacent(getClosestNode((int)p.get(1).getX(), (int)p.get(1).getY()));
+            if(comparePairs(p, pair)){
+                edges.remove(p);
+                getClosestNode((int)p.get(0).getX(), (int)p.get(0).getY()).
+                        removeFromAdjacent(getClosestNode((int)p.get(1).getX(), (int)p.get(1).getY()));
 
-               getClosestNode((int)p.get(1).getX(), (int)p.get(1).getY()).
-                       removeFromAdjacent(getClosestNode((int)p.get(0).getX(), (int)p.get(0).getY()));
-
-               return;
-           }
-        }
                 getClosestNode((int)p.get(1).getX(), (int)p.get(1).getY()).
                         removeFromAdjacent(getClosestNode((int)p.get(0).getX(), (int)p.get(0).getY()));
 
@@ -579,6 +534,8 @@ public class SuperiorWindow extends JFrame implements ActionListener {
             }
         }
     }
+
+
 
 
     /**
@@ -652,8 +609,6 @@ public class SuperiorWindow extends JFrame implements ActionListener {
 
        InsetX = X -1;
        InsetY = Y -1;
-
-
     }
 
     /**

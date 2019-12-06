@@ -10,7 +10,6 @@ import java.util.*;
 import java.io.*;
 
 /**
- *
  * Special JFrame child class used to display main mapping application and offer choice of options
  * including the creation of a new map, and finding a path on a map. Also shows a list of a
  */
@@ -22,11 +21,6 @@ public class GUI extends JFrame {
     DefaultTableModel modl = new DefaultTableModel();
     private DijkstraProcesser dijkstraProcesser;
 
-    /**
-     *
-     * Special JFrame child class used to display main mapping application and offer choice of options
-     * including
-     */
     public GUI(){
         JFileChooser fc = new JFileChooser();
         setTitle("MapApp Main Menu");
