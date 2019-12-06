@@ -269,6 +269,15 @@ public class DijkstraProcesser {
         display.runProg(mapPath, shortestPath);
     }
 
+    /**
+     * Method to explicitly find and return a list of integer pairs representing the coordinates of nodes
+     * to be traversed
+     *
+     * @param target the node to which the returned path will lead
+     *
+     * @return a List containing the shortest path to the target node in terms of coordinates represented
+     * by pairs of integers
+     */
     public List<Integer[]> getShortestPathTo(Node target)
     {
         for (Node vertex = target; vertex != null; vertex = vertex.getPrevious())

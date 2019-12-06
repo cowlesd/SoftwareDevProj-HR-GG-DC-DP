@@ -16,7 +16,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-
+/**
+ * A superior version of the GUI for the mapping program. Sleek, stylish, new, what can't it do???
+ */
 public class SuperiorWindow extends JFrame implements ActionListener {
     JButton wayPointBtn = new JButton("Waypoints");
     JButton destinationPointBtn = new JButton("Destination Points");
@@ -58,7 +60,11 @@ public class SuperiorWindow extends JFrame implements ActionListener {
 
     int weight = 0;
 
-   public SuperiorWindow() {
+    /**
+     * Constructor for the ol' sexy SuperiorWindow class. Gets you all set up with
+     * a SuperiorWindow of your own, as seen on TV.
+     */
+    public SuperiorWindow() {
        JPanel container = new JPanel();
        container.setLayout(new BorderLayout());
 
@@ -115,6 +121,12 @@ public class SuperiorWindow extends JFrame implements ActionListener {
        drawOnPanel();
    }
 
+    /**
+     * Simple method that notifies the user of the necessity to calibrate the Graphmaker,
+     * as well as how to do so. This is a public method that is called externally so that it does not hamper
+     * the more aesthetic portions of SupWindow creation, as something like, say, title assignment
+     * would not continue until the JOptionPane was closed.
+     */
    public void notifyOfCalibration(){
        JOptionPane.showMessageDialog(this,
                "In order to calibrate the Graphmaker, please place the tip of \n" +
@@ -154,19 +166,36 @@ public class SuperiorWindow extends JFrame implements ActionListener {
 
 
     }
+
+    /**
+     * Method to reset the visuals of buttons.
+     *
+     * @param btns The array of buttons to be reset
+     */
     private void resetButtonGraphics(JButton btns[]) {
        for (JButton b : btns) {
            b.setForeground(Color.BLACK);
            b.setOpaque(false);
        }
     }
+
+    /**
+     * Sets the visual of a button to a visually unique state to signify that
+     * it is currently selected
+     *
+     * @param btn the specific button to be selected
+     */
     private void setSelected(JButton btn) {
         btn.setBackground(Color.BLACK);
         btn.setForeground(Color.BLUE);
         btn.setOpaque(true);
     }
 
-
+    /**
+     * Method to create an image that combines the image of the map and the present nodes and edges
+     *
+     * @return a newly 'drawn upon' JPanel combining the graphics of nodes/edges and the map itself
+     */
     public JPanel paintImage() {
 
         JPanel Pane = new JPanel() {
@@ -221,6 +250,9 @@ public class SuperiorWindow extends JFrame implements ActionListener {
         return Pane;
     }
 
+    /**
+     * Method that performs the graphic operations requested by the user (adding nodes of various types and edges)
+     */
     public void drawOnPanel() {
         //filePath = filepath1;
         ArrayList<Point> pair = new ArrayList<>();
@@ -312,6 +344,10 @@ public class SuperiorWindow extends JFrame implements ActionListener {
         });
     }
 
+    /**
+     * Method to query for a file, create a string out of the filepath to the chosen file,
+     * and then modifies the filePath member to this string
+     */
     public void loadFile() {
         FileDialog dialog = new FileDialog(this, "Select File to Open");
         dialog.setMode(FileDialog.LOAD);
@@ -322,6 +358,13 @@ public class SuperiorWindow extends JFrame implements ActionListener {
         filePath = directory + file;
     }
 
+    /**
+     * Method to grab and return the node closest to the given (x, y) point
+     *
+     * @param x the x-coordinate to search from
+     * @param y the y-coordiante to search from
+     * @return the node closest to (x, y).
+     */
     private Node getClosestNode(int x, int y) {
         for (Node node : nodes)
             if (Math.abs(x - node.getLocX()) < 10 && Math.abs(y - node.getLocY()) < 10)
@@ -329,6 +372,12 @@ public class SuperiorWindow extends JFrame implements ActionListener {
         return null;
     }
 
+    /**
+     * Method to calculate the pythagorean distance between two nodes
+     *
+     * @param nodePair the two nodes for which distance will be found
+     * @return the pythagorean distance between the pair of nodes
+     */
     private int getWeight(ArrayList<Node> nodePair) {
        int weight = -2;
        if(!customWeight) {
@@ -349,12 +398,26 @@ public class SuperiorWindow extends JFrame implements ActionListener {
        return weight;
 
     }
+
+    /**
+     * Method to compare two points and return whether they exist in the same space or not
+     *
+     * @param n1 the first point to compare
+     * @param n2 the second point to compare to
+     * @return true if the points possess the same coordinates, false otherwise
+     */
     private boolean comparePoints(Point n1, Point n2) {
        if (n1.getX() == n2.getX() && n1.getY() == n2.getY()) {
            return true;
        }
        return false;
     }
+
+    /**
+     * Method to remove an edge between two points
+     *
+     * @param pair a pair containing the two points between which the edge will be removed
+     */
     public void removeEdge(ArrayList<Point> pair) {
         int toRm = -1;
         int counter = 0;
@@ -374,6 +437,12 @@ public class SuperiorWindow extends JFrame implements ActionListener {
 
     }
 
+    /**
+     * Method to remove a node at a mouse click lcoation
+     *
+     * @param x x coordinate of mouse click
+     * @param y y coordinate of mouse click
+     */
     public void removeNode(int x, int y) {
        ArrayList<ArrayList<Point>> rmedges = new ArrayList<>();
        boolean rm = false;
@@ -418,6 +487,12 @@ public class SuperiorWindow extends JFrame implements ActionListener {
             DestinationPoints.remove(toRm);
     }
 
+    /**
+     * Method to calibrate the x and y coordination of the image via mouse clicks
+     *
+     * @param X x location of mouse click
+     * @param Y y location of mouse click
+     */
     public void calibrate(int X, int Y) {
        for (JButton b : btns) {
            b.setEnabled(true);
@@ -432,6 +507,13 @@ public class SuperiorWindow extends JFrame implements ActionListener {
 
     }
 
+    /**
+     * Method that saves the map information to a file
+     *
+     * @param nodes corresponding nodes to save
+     * @param filePath file path location at which to save
+     * @param name the name of the file to be saved to
+     */
     private static void saveData(ArrayList<Node> nodes, String filePath, String name) {
 
         Path storageDir = Paths.get("src/main/resources/MapFiles/" + name);

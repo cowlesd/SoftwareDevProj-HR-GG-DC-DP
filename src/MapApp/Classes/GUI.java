@@ -131,6 +131,10 @@ public class GUI extends JFrame {
         }
 
     }
+
+    /**
+     * Method to display the selected file
+     */
     public void displayfile(){
 //        FileDialog dialog = new FileDialog(this, "Select File to Open");
 //        dialog.setMode(FileDialog.LOAD);
