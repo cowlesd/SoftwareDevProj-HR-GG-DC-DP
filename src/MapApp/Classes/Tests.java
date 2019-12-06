@@ -6,16 +6,15 @@ import java.io.IOException;
 
 public class Tests {
     @Test
-    public void testPaintComponent(){
+    public void testPaintComponent() {
 
         DisplayPath display = new DisplayPath();
         display.DrawPanel("src/main/resources/MappingLayoutNaked-page-0.png");
         DijkstraProcesser dijkstraProcessor;
-        try{
+        try {
             dijkstraProcessor = new DijkstraProcesser("A1", "A26", "src/main/resources/MapFiles/testDijkstra/NodeSource.txt");
             dijkstraProcessor.loadAdjacencyMatrix();
-    }
-        catch(IOException ex){
+    } catch(IOException ex) {
             ex.printStackTrace();
         }
         display.repaint();
@@ -23,7 +22,7 @@ public class Tests {
     }
 
     @Test
-    public void testDrawPanel(){
+    public void testDrawPanel() {
 
         DrawPanel.runProg("src/main/resources/MapFiles/testDijkstra/NodeSource.txt");
         DrawPanel drawPanel;
@@ -34,14 +33,13 @@ public class Tests {
     }
 
     @Test (expected = NullPointerException.class)
-    public void testFail(){
+    public void testFail() {
 
        DijkstraProcesser dijkstraProcessor = new DijkstraProcesser("A1", "A26", "src/main/resources/MapFiles/testDijkstra/NodeSources.txt");
 
-       try{
+       try {
            dijkstraProcessor.loadAdjacencyMatrix();
-       }
-       catch(IOException e){
+       } catch(IOException e) {
             e.printStackTrace();
         }
 
@@ -49,7 +47,6 @@ public class Tests {
     }
     @Test
     public void clearCoverage(){
-
     }
 
 }
